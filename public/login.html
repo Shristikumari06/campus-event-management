@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | CampusConnect — University Event Hub</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Core & Auth Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+
+  <!-- Ambient Glow Effects -->
+  <div class="auth-bg-ambient auth-ambient-1"></div>
+  <div class="auth-bg-ambient auth-ambient-2"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <div class="auth-split-wrapper">
+
+    <!-- Left Brand Banner (Desktop) -->
+    <div class="auth-side-banner">
+      <div class="auth-banner-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon-wrapper">
+            <i class="fa-solid fa-graduation-cap logo-icon"></i>
+            <span class="logo-pulse"></span>
+          </div>
+          <div class="logo-text">
+            <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+            <span class="logo-sub">University Event Hub</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="auth-banner-content">
+        <div class="auth-pill-tag">
+          <i class="fa-solid fa-sparkles"></i> 2026 Academic Season Active
+        </div>
+        <h1 class="auth-banner-title">
+          Welcome Back to Your <span class="gradient-text">Campus Life</span>
+        </h1>
+        <p class="auth-banner-desc">
+          Sign in to view your registered event entry passes, explore upcoming hackathons, varsity sports meets, and music fests across campus.
+        </p>
+
+        <div class="auth-highlights">
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-check"></i></div>
+            <span>Instant digital QR passes for auditorium check-ins</span>
+          </div>
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-check"></i></div>
+            <span>Verified university credit for extracurricular participation</span>
+          </div>
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-check"></i></div>
+            <span>Real-time seat reservation & waiting list updates</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-banner-footer">
+        <i class="fa-solid fa-shield-halved text-cyan"></i>
+        <span>Official University Event Portal &bull; SSL Secured</span>
+      </div>
+    </div>
+
+    <!-- Right Login Form Card -->
+    <div class="auth-form-side">
+      <div class="auth-card">
+        
+        <div class="auth-header">
+          <h2>Sign In</h2>
+          <p>Enter your student or university credentials to continue</p>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="login-alert" class="auth-alert" role="alert">
+          <i class="fa-solid fa-circle-exclamation auth-alert-icon"></i>
+          <span id="login-alert-text"></span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form" novalidate>
+          
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="login-email" class="form-label">
+              <i class="fa-solid fa-envelope"></i> Email Address <span class="req-star">*</span>
+            </label>
+            <div class="input-box">
+              <i class="fa-solid fa-at input-lead-icon"></i>
+              <input type="email" id="login-email" placeholder="student@campus.edu" required autocomplete="email">
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="login-password" class="form-label">
+              <i class="fa-solid fa-lock"></i> Password <span class="req-star">*</span>
+            </label>
+            <div class="input-box">
+              <i class="fa-solid fa-key input-lead-icon"></i>
+              <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="btn-toggle-password" data-target="login-password" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Options Row: Remember Me & Forgot Password -->
+          <div class="auth-row-options">
+            <label class="remember-label">
+              <input type="checkbox" id="login-remember">
+              <span>Remember me for 30 days</span>
+            </label>
+            <a href="#" id="link-forgot-password" class="link-forgot">Forgot Password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-auth-submit" id="btn-login-submit">
+            <span class="auth-spinner"></span>
+            <span class="auth-btn-text">Sign In to CampusConnect</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
+        </form>
+
+        <!-- Presentation Auto-Fill Demo Credentials -->
+        <div class="demo-credentials-box">
+          <div style="font-weight: 700; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; color: #fff;">
+            <i class="fa-solid fa-wand-magic-sparkles text-pink"></i> Presentation Quick-Demo Logins:
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button type="button" class="demo-fill-btn" id="btn-fill-admin-login">
+              <i class="fa-solid fa-shield-halved"></i> Dean / Admin Account
+            </button>
+            <button type="button" class="demo-fill-btn" id="btn-fill-student-login">
+              <i class="fa-solid fa-user-graduate"></i> Student Account
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-footer">
+          Don't have an account yet?
+          <a href="signup.html">Create Student Account</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="auth-modal-backdrop" id="forgot-password-modal">
+    <div class="auth-modal-content">
+      <button class="auth-modal-close" id="close-forgot-modal" aria-label="Close dialog">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem;">Reset Your Password</h3>
+      <p style="font-size: 0.88rem; color: #94a3b8; margin-bottom: 1.25rem;">
+        Enter your university email address. If registered, we will send you secure recovery instructions.
+      </p>
+
+      <div id="forgot-alert" class="auth-alert">
+        <i class="fa-solid fa-circle-info auth-alert-icon"></i>
+        <span id="forgot-alert-text"></span>
+      </div>
+
+      <form id="forgot-password-form">
+        <div class="form-group mb-3">
+          <label for="forgot-email" class="form-label">University Email</label>
+          <div class="input-box">
+            <i class="fa-solid fa-envelope input-lead-icon"></i>
+            <input type="email" id="forgot-email" placeholder="student@campus.edu" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 btn-glow">
+          <span>Send Reset Instructions</span>
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shared & Auth JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
+
