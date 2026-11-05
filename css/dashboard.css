@@ -1,0 +1,606 @@
+/* ==========================================================================
+   CampusConnect — Dashboard & Admin Stylesheet
+   Modern, responsive portal UI with metrics, onboarding stepper, and tables
+   ========================================================================== */
+
+/* Main Dashboard Body Container */
+.dash-layout {
+  min-height: 100vh;
+  background-color: #0b0f1d;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dashboard Top Navigation */
+.dash-nav {
+  background: rgba(14, 19, 36, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.dash-nav-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.dash-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.dash-nav-link {
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.dash-nav-link:hover, .dash-nav-link.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dash-nav-link.active {
+  color: var(--accent-pink, #ff0080);
+}
+
+/* User Profile Dropdown Pill */
+.user-menu-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.user-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-pink, #ff0080), var(--primary, #7928ca));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-meta-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.admin {
+  background: #f59e0b;
+  color: #000;
+}
+
+.role-badge.student {
+  background: rgba(121, 40, 202, 0.4);
+  color: #c084fc;
+}
+
+/* Dashboard Main Content Area */
+.dash-main {
+  flex: 1;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.25rem 1.5rem 4rem;
+}
+
+/* Welcome Hero Banner */
+.dash-welcome-card {
+  position: relative;
+  background: linear-gradient(135deg, #181132 0%, #0d1a3a 50%, #081329 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.dash-welcome-card::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 0, 128, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.welcome-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.welcome-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.welcome-subtitle {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  max-width: 600px;
+}
+
+/* Onboarding Guidance Stepper */
+.onboarding-guide-card {
+  background: rgba(18, 24, 46, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem 1.85rem;
+  margin-bottom: 2rem;
+}
+
+.onboarding-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.onboarding-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  position: relative;
+}
+
+.onboarding-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary, #7928ca);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-info strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.step-info span {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* Statistics Metric Cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.metric-card {
+  background: rgba(18, 24, 46, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.metric-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.metric-icon-purple {
+  background: rgba(121, 40, 202, 0.18);
+  color: #c084fc;
+}
+
+.metric-icon-pink {
+  background: rgba(255, 0, 128, 0.18);
+  color: #f43f5e;
+}
+
+.metric-icon-cyan {
+  background: rgba(6, 182, 212, 0.18);
+  color: #22d3ee;
+}
+
+.metric-icon-green {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
+
+.metric-info .metric-value {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.metric-info .metric-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+/* Section Header in Dashboard */
+.dash-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dash-section-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Event Cards in Dashboard */
+.dash-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.dash-event-card {
+  background: rgba(18, 24, 46, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.dash-event-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(121, 40, 202, 0.4);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+.event-card-img-wrap {
+  position: relative;
+  height: 175px;
+  overflow: hidden;
+}
+
+.event-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.dash-event-card:hover .event-card-img {
+  transform: scale(1.05);
+}
+
+.event-category-chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(11, 15, 29, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.event-card-content {
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.event-card-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.event-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 1.15rem;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-row i {
+  color: var(--accent-cyan, #06b6d4);
+  font-size: 0.85rem;
+  width: 16px;
+}
+
+/* Seat Capacity Progress Bar */
+.capacity-progress-wrap {
+  margin-top: auto;
+  margin-bottom: 1.25rem;
+}
+
+.capacity-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-bottom: 0.35rem;
+}
+
+.progress-bar-bg {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.progress-bar-fill.warning {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+.progress-bar-fill.full {
+  background: #ef4444;
+}
+
+/* Event Card Actions */
+.event-card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Registration Passes Table / List */
+.registrations-table-card {
+  background: rgba(18, 24, 46, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.dash-table th {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dash-table td {
+  padding: 1.15rem 1.25rem;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.dash-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pill.confirmed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pill.cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-pill.attended {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Empty State Card */
+.empty-dash-box {
+  padding: 3.5rem 2rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.empty-dash-icon {
+  font-size: 2.8rem;
+  color: #475569;
+  margin-bottom: 1rem;
+}
+
+.empty-dash-box h4 {
+  font-size: 1.2rem;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+}
+
+/* Admin Modals */
+.modal-backdrop,
+.dash-modal-backdrop,
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 16, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10001;
+  display: flex !important;
+  opacity: 0;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-backdrop.open,
+.dash-modal-backdrop.open,
+.admin-modal-backdrop.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.admin-modal-box {
+  background: #11172f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  max-width: 680px;
+  width: 100%;
+  padding: 2.25rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dash-nav-links {
+    display: none;
+  }
+  .welcome-title {
+    font-size: 1.7rem;
+  }
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .dash-events-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
