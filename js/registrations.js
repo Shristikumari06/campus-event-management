@@ -310,11 +310,11 @@ function setupTicketModalListeners() {
     });
   }
 
-  // Print Ticket Action
+  // Print Ticket Action -> Triggers high-resolution vector PDF generation & download
   const printBtn = document.getElementById('btn-print-ticket');
   if (printBtn) {
     printBtn.addEventListener('click', () => {
-      window.print();
+      downloadCurrentPassSlip();
     });
   }
 
