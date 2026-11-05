@@ -4,17 +4,6 @@
 
 ![CampusConnect Banner](https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&h=350&q=80)
 
-### 🚀 Next-Generation University Event Lifecycle & Digital Pass System
-**Full-Stack B.Tech / Academic Major & Minor Engineering Capstone Project**
-
-[![Node.js](https://img.shields.io/badge/Node.js-v20%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-v4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![SQLite3](https://img.shields.io/badge/SQLite-Native_v3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![JavaScript](https://img.shields.io/badge/Vanilla_JS-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/)
-[![HTML5](https://img.shields.io/badge/HTML5-Semantic_Accessible-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
-[![CSS3](https://img.shields.io/badge/CSS3-Glassmorphism_DarkNavy-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-
 [🌟 Live Repository](https://github.com/Shristikumari06/campus-event-management) • [📖 Documentation](#-core-system-modules) • [⚡ Quick Start](#-quick-start--installation) • [🎯 Viva Walkthrough](#-academic-submission--viva-presentation-guide)
 
 </div>
