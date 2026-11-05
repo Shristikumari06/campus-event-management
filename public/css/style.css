@@ -1,0 +1,51 @@
+/* ==========================================================================
+   CampusConnect — Primary Stylesheet Forwarder & Responsive Enhancements
+   ========================================================================== */
+
+@import url('../style.css');
+
+/* Enhanced accessibility focus rings */
+:focus-visible {
+  outline: 2.5px solid var(--accent-pink, #ff0080);
+  outline-offset: 2px;
+}
+
+/* Badge status chips */
+.badge-status-chip {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.badge-status-chip.open {
+  background: rgba(16, 185, 129, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge-status-chip.full {
+  background: rgba(239, 68, 68, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge-status-chip.closed {
+  background: rgba(100, 116, 139, 0.85);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge-status-chip.enrolled {
+  background: rgba(121, 40, 202, 0.9);
+  color: #fff;
+  border: 1px solid rgba(255, 0, 128, 0.5);
+  box-shadow: 0 0 10px rgba(121, 40, 202, 0.6);
+}
+
