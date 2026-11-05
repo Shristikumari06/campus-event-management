@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | CampusConnect</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dash-layout">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="dash-nav">
+    <div class="dash-nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-wrapper" style="background: linear-gradient(135deg, #7928ca, #3b82f6);">
+          <i class="fa-solid fa-shield-halved logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">Campus<span class="logo-accent">Admin</span></span>
+          <span class="logo-sub">Executive Portal</span>
+        </div>
+      </a>
+
+      <nav class="dash-nav-links">
+        <a href="admin.html" class="dash-nav-link active">
+          <i class="fa-solid fa-chart-line"></i> Overview
+        </a>
+        <a href="events.html" class="dash-nav-link">
+          <i class="fa-solid fa-calendar-days"></i> Public Events
+        </a>
+        <a href="dashboard.html" class="dash-nav-link">
+          <i class="fa-solid fa-user"></i> Student View
+        </a>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="user-menu-pill">
+          <div class="user-avatar-circle" style="background: linear-gradient(135deg, #7928ca, #3b82f6);">A</div>
+          <span class="user-meta-name" id="admin-display-name">Administrator</span>
+          <span class="role-badge admin">ADMIN</span>
+        </div>
+
+        <button onclick="handleLogout()" class="btn btn-subtle" title="Sign Out" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main">
+
+    <!-- Admin Welcome Header -->
+    <div class="dash-welcome-card" style="background: radial-gradient(circle at 80% 20%, rgba(121, 40, 202, 0.25), transparent 45%), rgba(18, 24, 46, 0.85);">
+      <div class="welcome-header">
+        <div>
+          <h1 class="welcome-title">
+            Administrator <span class="gradient-text">Operations Center</span> 🛡️
+          </h1>
+          <p class="welcome-subtitle">
+            Create events, audit student registrations, track auditorium venue capacities, and verify gate check-ins.
+          </p>
+        </div>
+        <button class="btn btn-primary btn-glow" id="btn-create-event" style="margin-top: 0.5rem;">
+          <i class="fa-solid fa-plus"></i> Create New Event
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin Metrics Row -->
+    <div class="dash-stats-grid">
+      <div class="dash-stat-item">
+        <div class="stat-icon-wrap" style="background: rgba(121, 40, 202, 0.15); color: #c084fc;">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="dash-stat-info">
+          <span class="stat-number" id="stat-total-students">--</span>
+          <span class="stat-title">Total Enrolled Students</span>
+        </div>
+      </div>
+
+      <div class="dash-stat-item">
+        <div class="stat-icon-wrap" style="background: rgba(255, 0, 128, 0.15); color: #ff0080;">
+          <i class="fa-solid fa-calendar-star"></i>
+        </div>
+        <div class="dash-stat-info">
+          <span class="stat-number" id="stat-total-events">--</span>
+          <span class="stat-title">Total Campus Events</span>
+        </div>
+      </div>
+
+      <div class="dash-stat-item">
+        <div class="stat-icon-wrap" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+          <i class="fa-solid fa-ticket"></i>
+        </div>
+        <div class="dash-stat-info">
+          <span class="stat-number" id="stat-total-regs">--</span>
+          <span class="stat-title">Total Registrations</span>
+        </div>
+      </div>
+
+      <div class="dash-stat-item">
+        <div class="stat-icon-wrap" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div class="dash-stat-info">
+          <span class="stat-number" id="stat-upcoming-events">--</span>
+          <span class="stat-title">Upcoming Active Events</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gate Security & Live Ticket Scanner Tool -->
+    <div class="dash-welcome-card" style="background: linear-gradient(135deg, rgba(14, 22, 48, 0.9) 0%, rgba(9, 13, 28, 0.95) 100%); border: 1px solid rgba(6, 182, 212, 0.25); margin-top: 2rem; margin-bottom: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 800; color: #06b6d4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.35rem;">
+            <i class="fa-solid fa-shield-halved"></i> AUDITORIUM GATE CONTROL
+          </div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0;">
+            Live Ticket Verification & Check-In Scanner 🛡️
+          </h2>
+        </div>
+        <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 700;">
+          <i class="fa-solid fa-circle-dot"></i> SCANNER ACTIVE
+        </span>
+      </div>
+
+      <!-- Scanner Input Box -->
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem;">
+        <div style="position: relative; flex: 1; min-width: 260px;">
+          <i class="fa-solid fa-qrcode" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--accent-cyan, #06b6d4);"></i>
+          <input type="text" id="scanner-ticket-input" placeholder="Scan or enter Ticket Pass ID (e.g. CC-2026-01-0042)" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 12px; color: #fff; font-size: 0.95rem; font-family: monospace;">
+        </div>
+        <button class="btn btn-primary btn-glow" id="btn-verify-ticket" style="padding: 0.8rem 1.6rem;">
+          <i class="fa-solid fa-id-card-clip"></i> Verify & Check-In
+        </button>
+      </div>
+
+      <!-- Quick Test Pass Buttons -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; font-size: 0.82rem; color: #94a3b8;">
+        <span>Quick Demo Passes:</span>
+        <button class="btn btn-subtle" onclick="quickFillPass('CC-2026-01-0042')" style="padding: 0.25rem 0.65rem; font-size: 0.76rem; font-family: monospace;">CC-2026-01-0042</button>
+        <button class="btn btn-subtle" onclick="quickFillPass('CC-2026-02-0189')" style="padding: 0.25rem 0.65rem; font-size: 0.76rem; font-family: monospace;">CC-2026-02-0189</button>
+        <button class="btn btn-subtle" onclick="quickFillPass('CC-2026-03-0091')" style="padding: 0.25rem 0.65rem; font-size: 0.76rem; font-family: monospace;">CC-2026-03-0091</button>
+      </div>
+
+      <!-- Live Verification Result Panel (Hidden by default) -->
+      <div id="scanner-result-box" class="d-none" style="margin-top: 1.5rem; background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.35); border-radius: 16px; padding: 1.25rem 1.5rem;">
+        <!-- Populated via admin.js -->
+      </div>
+    </div>
+
+    <!-- Events Management Table -->
+    <div class="dash-section-header" style="margin-top: 3rem;">
+      <div>
+        <h2 class="dash-section-title">Manage Campus Events</h2>
+        <p class="dash-section-desc">Edit event descriptions, alter participant quotas, or review participant rosters</p>
+      </div>
+    </div>
+
+    <div class="registrations-table-card">
+      <div class="table-responsive">
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Event Title</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Venue</th>
+              <th>Capacity</th>
+              <th>Status</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-events-tbody">
+            <!-- Injected via admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Create / Edit Event Modal -->
+  <div class="dash-modal-backdrop" id="event-modal">
+    <div class="dash-modal-box" style="max-width: 650px;">
+      <button class="dash-modal-close" id="close-event-modal">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 1.25rem;" id="event-modal-title">
+        Create New Campus Event
+      </h3>
+
+      <form id="event-admin-form">
+        <div class="form-group mb-3">
+          <label class="form-label" style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">
+            Event Title *
+          </label>
+          <input type="text" id="ev-title" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Category *</label>
+            <select id="ev-category" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+              <option value="College Fest">College Fest</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Competition">Competition</option>
+              <option value="Technology">Technology</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Coding">Coding</option>
+              <option value="Sports">Sports</option>
+              <option value="Creative">Creative</option>
+              <option value="Business">Business</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Venue Location *</label>
+            <input type="text" id="ev-venue" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Eligibility Criteria *</label>
+          <input type="text" id="ev-eligibility" placeholder="e.g. Open to All Students / B.Tech CSE 2nd & 3rd Year / Teams of 2-4" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Start Date & Time *</label>
+            <input type="datetime-local" id="ev-start" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+          </div>
+
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">End Date & Time *</label>
+            <input type="datetime-local" id="ev-end" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Registration Deadline *</label>
+            <input type="datetime-local" id="ev-deadline" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+          </div>
+
+          <div>
+            <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Seat Capacity *</label>
+            <input type="number" id="ev-capacity" min="1" max="5000" value="100" required style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Poster Image URL</label>
+          <input type="url" id="ev-image" placeholder="https://..." style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;">
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="display: block; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Event Description</label>
+          <textarea id="ev-description" rows="3" style="width: 100%; padding: 0.7rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: #fff;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 btn-glow" style="margin-top: 1rem;">
+          <i class="fa-solid fa-floppy-disk"></i> Save Event
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Participants Modal -->
+  <div class="dash-modal-backdrop" id="participants-modal">
+    <div class="dash-modal-box" style="max-width: 850px;">
+      <button class="dash-modal-close" onclick="closeModal('participants-modal')">&times;</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin: 0;" id="participants-modal-title">
+            Registered Participants
+          </h3>
+          <span class="status-pill confirmed" id="participants-count" style="margin-top: 0.35rem; display: inline-block;">0 Students</span>
+        </div>
+        <button class="btn btn-secondary" id="btn-export-roster" onclick="exportCurrentEventRosterCSV()" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+          <i class="fa-solid fa-file-csv text-cyan"></i> Export Roster CSV
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Roll ID</th>
+              <th>Department</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Registered At</th>
+            </tr>
+          </thead>
+          <tbody id="participants-tbody">
+            <!-- Injected via admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared & Admin JS -->
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
+
