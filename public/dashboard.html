@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | CampusConnect</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Main & Dashboard Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dash-layout">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Dashboard Top Navigation -->
+  <header class="dash-nav">
+    <div class="dash-nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="logo">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+          <span class="logo-sub">Student Portal</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="dash-nav-links">
+        <a href="dashboard.html" class="dash-nav-link active">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </a>
+        <a href="events.html" class="dash-nav-link">
+          <i class="fa-solid fa-calendar-days"></i> Explore Events
+        </a>
+        <a href="my-registrations.html" class="dash-nav-link">
+          <i class="fa-solid fa-ticket"></i> My Registrations
+        </a>
+        <a href="profile.html" class="dash-nav-link">
+          <i class="fa-solid fa-user-gear"></i> Profile
+        </a>
+      </nav>
+
+      <!-- User Menu & Actions -->
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="user-menu-pill">
+          <div class="user-avatar-circle" id="nav-user-avatar">S</div>
+          <span class="user-meta-name" id="nav-user-name">Student</span>
+          <span class="role-badge student">STUDENT</span>
+        </div>
+
+        <button onclick="handleLogout()" class="btn btn-subtle" title="Sign Out" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dash-main">
+
+    <!-- Welcome Hero Banner -->
+    <div class="dash-welcome-card">
+      <div class="welcome-header">
+        <div>
+          <h1 class="welcome-title">
+            Welcome back, <span class="gradient-text" id="dash-welcome-name">Student</span>! 👋
+          </h1>
+          <p class="welcome-subtitle">
+            <span id="dash-user-dept">Engineering Department</span> &bull; Roll ID: <code id="dash-user-roll" style="color: #c084fc;">CS001</code>
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <a href="events.html" class="btn btn-primary btn-large btn-glow">
+            <i class="fa-solid fa-compass"></i>
+            <span>Browse All Events</span>
+          </a>
+          <a href="my-registrations.html" class="btn btn-glass btn-large">
+            <i class="fa-solid fa-ticket"></i>
+            <span>My Entry Passes</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- First-Time Onboarding Guidance Stepper -->
+    <div class="onboarding-guide-card">
+      <div class="onboarding-title">
+        <i class="fa-solid fa-route text-pink"></i> Quick Student Guide — How Event Registration Works
+      </div>
+      <div class="onboarding-steps">
+        <div class="onboarding-step">
+          <span class="step-num">1</span>
+          <div class="step-info">
+            <strong>Browse Events</strong>
+            <span>Explore tech symposiums, concerts, hackathons & sports fests.</span>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">2</span>
+          <div class="step-info">
+            <strong>Select Domain</strong>
+            <span>Filter events by category (Coding, Cultural, Sports, etc.).</span>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">3</span>
+          <div class="step-info">
+            <strong>View Details</strong>
+            <span>Check dates, venues, organizers, and remaining seat capacity.</span>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">4</span>
+          <div class="step-info">
+            <strong>1-Click Register</strong>
+            <span>Instantly reserve your free student seat before deadline passes.</span>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">5</span>
+          <div class="step-info">
+            <strong>Access Pass</strong>
+            <span>Present your digital entry pass with QR code at the hall doors.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon-box metric-icon-pink">
+          <i class="fa-solid fa-ticket"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value" id="metric-my-regs">0</div>
+          <div class="metric-label">My Registered Passes</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box metric-icon-purple">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value" id="metric-upcoming-total">6</div>
+          <div class="metric-label">Upcoming Campus Events</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box metric-icon-cyan">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">Active</div>
+          <div class="metric-label">Digital QR Passes Ready</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box metric-icon-green">
+          <i class="fa-solid fa-shield-check"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">Verified Student Status</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Search Strip -->
+    <div style="background: rgba(18, 24, 46, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 1.25rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem;">
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--accent-cyan); font-size: 1.1rem; margin-left: 0.5rem;"></i>
+      <input type="text" id="dash-search-input" placeholder="Search campus events by keyword, speaker, hackathon, concert... (Press Enter to search)" style="width: 100%; color: #fff; font-size: 0.95rem;">
+    </div>
+
+    <!-- Recommended & Popular Events Section -->
+    <div style="margin-bottom: 3rem;">
+      <div class="dash-section-header">
+        <h2 class="dash-section-title">
+          <i class="fa-solid fa-fire text-pink"></i> Recommended Campus Events
+        </h2>
+        <a href="events.html" class="link-forgot" style="font-size: 0.92rem;">
+          View All Events <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="dash-events-grid" id="dash-recommended-events">
+        <!-- Rendered via dashboard.js -->
+      </div>
+    </div>
+
+    <!-- Recent Registrations Preview -->
+    <div>
+      <div class="dash-section-header">
+        <h2 class="dash-section-title">
+          <i class="fa-solid fa-clock-rotate-left text-cyan"></i> My Recent Registrations
+        </h2>
+        <a href="my-registrations.html" class="link-forgot" style="font-size: 0.92rem;">
+          Manage All Passes <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="registrations-table-card" id="dash-recent-registrations">
+        <!-- Rendered via dashboard.js -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared & Dashboard JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
+
