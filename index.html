@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusConnect | Campus Event Management & Registration Portal</title>
+  <meta name="description"
+    content="Discover, explore, and register for campus events, tech fests, cultural nights, hackathons, and sports meets at CampusConnect.">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome Icons 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Reading Scroll Progress Bar -->
+  <div id="scroll-progress" class="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Confetti Canvas for Ticket Celebrations -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header id="main-header" class="header">
+    <div class="header-container">
+
+      <!-- Logo -->
+      <a href="#home" class="logo" id="brand-logo" aria-label="CampusConnect Home">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-graduation-cap logo-icon"></i>
+          <span class="logo-pulse"></span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+          <span class="logo-sub">University Event Hub</span>
+        </div>
+      </a>
+
+      <!-- Quick Search Bar (Header Desktop) -->
+      <div class="header-search d-none-mobile">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="nav-search-input" placeholder="Search events, clubs, venues..." autocomplete="off">
+        <span class="search-shortcut"><kbd>Ctrl</kbd> + <kbd>K</kbd></span>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-menu" id="desktop-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active"><i class="fa-solid fa-house nav-icon"></i> Home</a></li>
+          <li><a href="#events" class="nav-link"><i class="fa-solid fa-calendar-days nav-icon"></i> Events</a></li>
+          <li><a href="#categories" class="nav-link"><i class="fa-solid fa-layer-group nav-icon"></i> Categories</a>
+          </li>
+          <li><a href="#about" class="nav-link"><i class="fa-solid fa-circle-info nav-icon"></i> About Us</a></li>
+          <li><a href="#faq" class="nav-link"><i class="fa-solid fa-circle-question nav-icon"></i> FAQs</a></li>
+          <li><a href="#contact" class="nav-link"><i class="fa-solid fa-envelope nav-icon"></i> Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Action Buttons -->
+      <div class="header-actions">
+        <a href="login.html" class="btn btn-subtle" id="nav-login-btn">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <span>Login</span>
+        </a>
+
+        <a href="signup.html" class="btn btn-primary btn-glow" id="nav-signup-btn">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Create Account</span>
+        </a>
+
+        <button class="btn-tickets" id="btn-view-tickets" title="View your saved event passes" aria-label="My Passes">
+          <i class="fa-solid fa-ticket"></i>
+          <span class="tickets-badge pulse-badge" id="registered-badge">0</span>
+          <span class="btn-tickets-text">My Passes</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="mobile-search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="mobile-search-input" placeholder="Search events, fests, societies...">
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="#home" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home Overview</a></li>
+        <li><a href="#events" class="mobile-nav-link"><i class="fa-solid fa-calendar-days"></i> Browse Events</a></li>
+        <li><a href="#categories" class="mobile-nav-link"><i class="fa-solid fa-layer-group"></i> Domains &
+            Categories</a></li>
+        <li><a href="#about" class="mobile-nav-link"><i class="fa-solid fa-circle-info"></i> About Campus Life</a></li>
+        <li><a href="#faq" class="mobile-nav-link"><i class="fa-solid fa-circle-question"></i> Help & FAQs</a></li>
+        <li><a href="#contact" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact Council</a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <a href="login.html" class="btn btn-subtle w-100">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+          </a>
+          <a href="signup.html" class="btn btn-primary w-100 btn-glow">
+            <i class="fa-solid fa-user-plus"></i> Sign Up
+          </a>
+        </div>
+        <button class="btn btn-secondary w-100 mb-2" id="mobile-my-tickets-btn">
+          <i class="fa-solid fa-ticket"></i> View My Registered Passes (<span id="mobile-badge">0</span>)
+        </button>
+        <a href="#register" class="btn btn-secondary w-100" id="mobile-drawer-reg-btn">
+          <i class="fa-solid fa-id-badge"></i> Quick Event Registration
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="home" class="hero-section">
+    <!-- Ambient Background Effects -->
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-ambient-glow glow-1"></div>
+    <div class="hero-ambient-glow glow-2"></div>
+    <div class="hero-ambient-glow glow-3"></div>
+
+    <div class="container hero-container">
+
+      <!-- Hero Left: Content & Tagline -->
+      <div class="hero-content">
+
+        <div class="hero-badge animate-fade-in">
+          <span class="badge-dot"></span>
+          <span class="badge-text"><i class="fa-solid fa-sparkles"></i> 2026 Academic Event Season Active</span>
+          <span class="badge-chip">LIVE</span>
+        </div>
+
+        <h1 class="hero-title animate-slide-up">
+          Your Campus. <br>
+          <span class="gradient-text">Your Stage.</span> <br>
+          Your Community.
+        </h1>
+
+        <p class="hero-description animate-slide-up delay-1">
+          The premier official portal for university students to discover, lead, and experience high-caliber tech
+          symposiums, national hackathons, cultural concerts, and varsity athletic leagues. Reserve your seat in seconds
+          with instant digital QR entry passes.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-cta-group animate-slide-up delay-2">
+          <a href="#events" class="btn btn-primary btn-large btn-glow" id="hero-explore-btn">
+            <i class="fa-solid fa-compass"></i>
+            <span>Explore Campus Events</span>
+          </a>
+          <a href="login.html" class="btn btn-glass btn-large">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            <span>Student Login</span>
+          </a>
+          <a href="signup.html" class="btn btn-subtle btn-large">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Create Account</span>
+          </a>
+        </div>
+
+        <!-- Quick Sub-Actions -->
+        <div
+          style="display: flex; gap: 0.85rem; align-items: center; margin-top: 1.15rem; font-size: 0.88rem; color: #94a3b8; flex-wrap: wrap;"
+          class="animate-slide-up delay-2">
+          <span style="color: #cbd5e1;"><i class="fa-solid fa-bolt text-cyan"></i> Quick Portals:</span>
+          <button id="hero-host-btn"
+            style="background: none; border: none; color: #c084fc; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 0; font-size: inherit;">
+            <i class="fa-solid fa-bullhorn"></i> Submit Event Proposal
+          </button>
+          <span>&bull;</span>
+          <a href="admin.html" style="color: #38bdf8; font-weight: 600; text-decoration: underline;">
+            <i class="fa-solid fa-shield-halved"></i> Dean / Admin Portal
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Hero Right: Interactive Featured Event Spotlight Slider & Live Countdown -->
+      <div class="hero-showcase animate-fade-in delay-2">
+        <div class="featured-card-wrapper">
+
+          <div class="featured-card-header">
+            <div class="featured-label-group">
+              <span class="featured-pulse-icon"><i class="fa-solid fa-fire"></i></span>
+              <span class="featured-label">FEATURED SPOTLIGHT</span>
+            </div>
+
+            <div class="carousel-indicators" id="hero-carousel-dots">
+              <span class="dot active" data-slide="0" title="Slide 1"></span>
+              <span class="dot" data-slide="1" title="Slide 2"></span>
+              <span class="dot" data-slide="2" title="Slide 3"></span>
+            </div>
+          </div>
+
+          <!-- Featured Event Dynamic Container -->
+          <div class="featured-card" id="featured-card-content">
+            <!-- Populated via script.js -->
+          </div>
+
+          <!-- Live Countdown Timer Strip -->
+          <div class="countdown-strip" id="hero-countdown-strip">
+            <div class="countdown-title">
+              <i class="fa-regular fa-clock"></i> Starts In:
+            </div>
+            <div class="countdown-boxes">
+              <div class="cd-box"><span id="cd-days">14</span><small>Days</small></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-box"><span id="cd-hours">08</span><small>Hours</small></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-box"><span id="cd-mins">42</span><small>Mins</small></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-box"><span id="cd-secs">15</span><small>Secs</small></div>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-controls">
+            <button class="carousel-btn prev-btn" id="hero-prev-btn" aria-label="Previous featured event">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="slider-counter" id="hero-slide-counter">1 / 3</div>
+            <button class="carousel-btn next-btn" id="hero-next-btn" aria-label="Next featured event">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== 3-STEP STUDENT PORTAL WORKFLOW ==================== -->
+    <div class="container" style="margin-top: 2.25rem; margin-bottom: -0.75rem; position: relative; z-index: 10;">
+      <div
+        style="background: rgba(18, 24, 46, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 1.35rem 1.85rem; backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.9rem;">
+            <div
+              style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #ff0080, #7928ca); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; flex-shrink: 0;">
+              1</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.94rem; display: block;">1. Discover Events</strong>
+              <span style="color: #94a3b8; font-size: 0.82rem;">Filter tech symposiums, hackathons, concerts &
+                sports.</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.9rem;">
+            <div
+              style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; flex-shrink: 0;">
+              2</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.94rem; display: block;">2. 1-Click Registration</strong>
+              <span style="color: #94a3b8; font-size: 0.82rem;">Enter your student ID to claim your seat before it fills
+                up.</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.9rem;">
+            <div
+              style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; flex-shrink: 0;">
+              3</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.94rem; display: block;">3. Digital QR Entry Pass</strong>
+              <span style="color: #94a3b8; font-size: 0.82rem;">Present your digital ticket at the auditorium for
+                verified entry.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== QUICK SEARCH & FILTER BAR ==================== -->
+    <div class="container quick-filter-wrapper">
+      <div class="quick-filter-card" id="quick-filter-bar">
+
+        <!-- Filter 1: Month / Date -->
+        <div class="filter-item">
+          <label for="quick-date-select"><i class="fa-regular fa-calendar text-pink"></i> Select Month</label>
+          <div class="select-box">
+            <select id="quick-date-select">
+              <option value="all">Any Upcoming Month</option>
+              <option value="NOV">November 2026 (Fest Month)</option>
+              <option value="DEC">December 2026 (Winter Fests)</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <!-- Filter 2: Department / College -->
+        <div class="filter-item">
+          <label for="quick-dept-select"><i class="fa-solid fa-building-columns text-purple"></i> Department</label>
+          <div class="select-box">
+            <select id="quick-dept-select">
+              <option value="all">All Departments & Faculties</option>
+              <option value="Computer Science">Computer Science & IT</option>
+              <option value="Cultural Society">Cultural & Fine Arts</option>
+              <option value="Sports Council">Athletics & Sports Council</option>
+              <option value="Business School">Business & Management</option>
+              <option value="Engineering">Robotics & Engineering</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <!-- Filter 3: Category / Event Type -->
+        <div class="filter-item">
+          <label for="quick-cat-select"><i class="fa-solid fa-shapes text-cyan"></i> Category</label>
+          <div class="select-box">
+            <select id="quick-cat-select">
+              <option value="all">All Event Domains</option>
+              <option value="Technology">Technology & AI</option>
+              <option value="Cultural">Cultural & Concerts</option>
+              <option value="Coding">Coding & Hackathons</option>
+              <option value="Sports">Sports & Fitness</option>
+              <option value="Creative">Creative Arts & Photo</option>
+              <option value="Business">Entrepreneurship & Startups</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <!-- Submit Filter Button -->
+        <button class="btn btn-primary quick-filter-btn btn-glow" id="quick-filter-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Find Events</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Smooth Wave Transition to Light Surface -->
+    <div class="hero-wave-divider">
+      <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none">
+        <path
+          d="M0,32L80,37.3C160,43,320,53,480,48C640,43,800,21,960,16C1120,11,1280,21,1360,26.7L1440,32L1440,80L1360,80C1280,80,1120,80,960,80C800,80,640,80,480,80C320,80,160,80,80,80L0,80Z"
+          fill="#f8fafc"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==================== CATEGORIES SECTION ==================== -->
+  <section id="categories" class="categories-section">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <span class="section-tag"><i class="fa-solid fa-compass"></i> EXPLORE BY DOMAIN</span>
+        <h2 class="section-title">Popular Event Categories</h2>
+        <p class="section-subtitle">Click any domain below to instantly filter matching campus activities and reserve
+          your seat</p>
+      </div>
+
+      <div class="category-grid">
+
+        <!-- Category Card 1 -->
+        <div class="category-card" data-category="Technology" tabindex="0" role="button"
+          aria-label="Filter by Technology">
+          <div class="category-icon-bubble cat-tech">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <h3 class="category-name">Technology</h3>
+          <p class="category-count" id="count-cat-Technology">2 Active Events</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <!-- Category Card 2 -->
+        <div class="category-card" data-category="Cultural" tabindex="0" role="button" aria-label="Filter by Cultural">
+          <div class="category-icon-bubble cat-cultural">
+            <i class="fa-solid fa-guitar"></i>
+          </div>
+          <h3 class="category-name">Cultural & Music</h3>
+          <p class="category-count" id="count-cat-Cultural">2 Active Events</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <!-- Category Card 3 -->
+        <div class="category-card" data-category="Coding" tabindex="0" role="button" aria-label="Filter by Coding">
+          <div class="category-icon-bubble cat-coding">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3 class="category-name">Coding & Hackathons</h3>
+          <p class="category-count" id="count-cat-Coding">1 Active Event</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <!-- Category Card 4 -->
+        <div class="category-card" data-category="Sports" tabindex="0" role="button" aria-label="Filter by Sports">
+          <div class="category-icon-bubble cat-sports">
+            <i class="fa-solid fa-volleyball"></i>
+          </div>
+          <h3 class="category-name">Sports & Fitness</h3>
+          <p class="category-count" id="count-cat-Sports">1 Active Event</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <!-- Category Card 5 -->
+        <div class="category-card" data-category="Creative" tabindex="0" role="button"
+          aria-label="Filter by Creative Arts">
+          <div class="category-icon-bubble cat-creative">
+            <i class="fa-solid fa-palette"></i>
+          </div>
+          <h3 class="category-name">Arts & Creativity</h3>
+          <p class="category-count" id="count-cat-Creative">1 Active Event</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <!-- Category Card 6 -->
+        <div class="category-card" data-category="Business" tabindex="0" role="button" aria-label="Filter by Business">
+          <div class="category-icon-bubble cat-business">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <h3 class="category-name">Entrepreneurship</h3>
+          <p class="category-count" id="count-cat-Business">1 Active Event</p>
+          <span class="category-link">Explore Domain <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED & UPCOMING EVENTS ==================== -->
+  <section id="events" class="events-section">
+    <div class="container">
+
+      <!-- Section Header -->
+      <div class="events-top-bar">
+        <div class="events-heading-box">
+          <div class="pill-tab-header">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Upcoming Campus Events</span>
+          </div>
+          <p class="events-subtext">Discover upcoming tournaments, symposiums, concerts, and workshops</p>
+        </div>
+
+        <!-- Search & Sort Controls -->
+        <div class="events-controls">
+          <div class="event-search-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="event-search-input" placeholder="Search by title, speaker, club, venue..."
+              aria-label="Search events">
+            <button id="clear-search-btn" class="clear-btn d-none" title="Clear search"><i
+                class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <div class="sort-wrapper">
+            <label for="event-sort-select" class="sort-label"><i class="fa-solid fa-arrow-down-wide-short"></i>
+              Sort:</label>
+            <select id="event-sort-select">
+              <option value="date-asc">Date: Soonest First</option>
+              <option value="date-desc">Date: Latest First</option>
+              <option value="popular">Most Popular (High Capacity)</option>
+              <option value="name-asc">Alphabetical (A-Z)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills Bar -->
+      <div class="category-filter-pills" id="category-filter-bar">
+        <button class="cat-pill active" data-filter="all">All Events (<span id="count-all">8</span>)</button>
+        <button class="cat-pill" data-filter="Technology">Technology (<span
+            id="pill-count-Technology">2</span>)</button>
+        <button class="cat-pill" data-filter="Cultural">Cultural (<span id="pill-count-Cultural">2</span>)</button>
+        <button class="cat-pill" data-filter="Coding">Coding (<span id="pill-count-Coding">1</span>)</button>
+        <button class="cat-pill" data-filter="Sports">Sports (<span id="pill-count-Sports">1</span>)</button>
+        <button class="cat-pill" data-filter="Creative">Creative (<span id="pill-count-Creative">1</span>)</button>
+        <button class="cat-pill" data-filter="Business">Business (<span id="pill-count-Business">1</span>)</button>
+        <button class="cat-pill btn-clear-all-filters" id="btn-reset-filters" title="Reset all applied filters">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+        </button>
+      </div>
+
+      <!-- Active Filter Status Indicator -->
+      <div class="active-filter-indicator d-none" id="active-filter-indicator">
+        <span id="filter-indicator-text">Showing filtered events</span>
+        <button class="btn-indicator-clear" id="btn-indicator-clear"><i class="fa-solid fa-xmark"></i> Clear</button>
+      </div>
+
+      <!-- Events Grid Container -->
+      <div class="events-grid" id="events-grid">
+        <!-- Event cards rendered via script.js -->
+      </div>
+
+      <!-- Empty State Container -->
+      <div class="empty-state d-none" id="empty-state">
+        <div class="empty-state-icon">
+          <i class="fa-solid fa-calendar-xmark"></i>
+        </div>
+        <h3 class="empty-state-title">No Events Matched Your Criteria</h3>
+        <p class="empty-state-text">We couldn't find any campus events matching your selected search query or category
+          filters. Try clearing your filters or searching another keyword.</p>
+        <button class="btn btn-primary btn-glow" id="btn-empty-reset">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Show All Events
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== EVENT REGISTRATION SECTION ==================== -->
+  <section id="register" class="register-section">
+    <div class="container">
+
+      <div class="register-card-wrapper">
+
+        <!-- Left Banner: Information & Perks -->
+        <div class="register-info-panel">
+          <div class="panel-tag"><i class="fa-solid fa-shield-halved"></i> VERIFIED STUDENT REGISTRATION</div>
+          <h2 class="panel-title">Secure Your Seat at Campus Events</h2>
+          <p class="panel-desc">
+            Register directly using your university roll number to receive instant QR-enabled digital student event
+            passes for seamless auditorium and entrance check-in.
+          </p>
+
+          <div class="reg-perks-list">
+            <div class="perk-item">
+              <div class="perk-icon"><i class="fa-solid fa-bolt"></i></div>
+              <div class="perk-text">
+                <strong>Instant Digital Entry Pass</strong>
+                <span>Scannable high-resolution QR ticket and unique pass ID generated immediately.</span>
+              </div>
+            </div>
+
+            <div class="perk-item">
+              <div class="perk-icon"><i class="fa-solid fa-certificate"></i></div>
+              <div class="perk-text">
+                <strong>Verified Attendance Credit</strong>
+                <span>Official attendance logged for extracurricular college transcript activity credits.</span>
+              </div>
+            </div>
+
+            <div class="perk-item">
+              <div class="perk-icon"><i class="fa-solid fa-bell"></i></div>
+              <div class="perk-text">
+                <strong>Live Event Notifications</strong>
+                <span>Real-time announcements, hall entry schedules, and speaker updates.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Fill Demo Button (Huge presentation win for evaluators!) -->
+          <div class="demo-quick-fill-box">
+            <button type="button" class="btn btn-demo-fill" id="btn-demo-fill"
+              title="Auto-fill form with sample student info">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Quick-Fill Demo Student</span>
+            </button>
+            <small class="demo-hint"><i class="fa-solid fa-circle-info"></i> Rapid population for college project review
+              & evaluation</small>
+          </div>
+
+          <div class="reg-note-box">
+            <i class="fa-solid fa-database"></i>
+            <span><strong>Verified Student Registry:</strong> Powered by SQLite persistent backend storage with
+              real-time seat validation, atomic overbooking protection, and duplicate entry safeguards.</span>
+          </div>
+        </div>
+
+        <!-- Right: The Registration Form -->
+        <div class="register-form-panel">
+          <div class="form-panel-header">
+            <h3>Student Event Registration</h3>
+            <p>Please enter your academic credentials to reserve your seat</p>
+          </div>
+
+          <form id="registration-form" novalidate>
+
+            <!-- Student Name -->
+            <div class="form-group">
+              <label for="reg-name"><i class="fa-solid fa-user"></i> Full Student Name <span
+                  class="req">*</span></label>
+              <div class="input-icon-wrapper">
+                <input type="text" id="reg-name" placeholder="e.g. Alex Morgan" required autocomplete="name">
+                <i class="fa-solid fa-check field-valid-icon"></i>
+              </div>
+              <small class="error-msg" id="err-name">Please enter your full name (minimum 3 characters)</small>
+            </div>
+
+            <!-- Student ID & Department Grid -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="reg-id"><i class="fa-solid fa-id-card"></i> Student ID / Roll No. <span
+                    class="req">*</span></label>
+                <div class="input-icon-wrapper">
+                  <input type="text" id="reg-id" placeholder="e.g. CS2024101" required>
+                  <i class="fa-solid fa-check field-valid-icon"></i>
+                </div>
+                <small class="error-msg" id="err-id">Valid student roll number required (minimum 4 characters)</small>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="reg-dept"><i class="fa-solid fa-building-columns"></i> Academic Department <span
+                    class="req">*</span></label>
+                <div class="select-wrapper">
+                  <select id="reg-dept" required>
+                    <option value="">Select Department...</option>
+                    <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Electronics & Communication">Electronics & Communication</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Business Administration">Business Administration (MBA / BBA)</option>
+                    <option value="Arts, Media & Design">Arts, Media & Design</option>
+                    <option value="Applied Sciences">Applied Sciences</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <small class="error-msg" id="err-dept">Please select your academic department</small>
+              </div>
+            </div>
+
+            <!-- Email & Phone Grid -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="reg-email"><i class="fa-solid fa-envelope"></i> University / Personal Email <span
+                    class="req">*</span></label>
+                <div class="input-icon-wrapper">
+                  <input type="email" id="reg-email" placeholder="alex.morgan@campus.edu" required autocomplete="email">
+                  <i class="fa-solid fa-check field-valid-icon"></i>
+                </div>
+                <small class="error-msg" id="err-email">Please provide a valid email address (e.g.
+                  name@campus.edu)</small>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="reg-phone"><i class="fa-solid fa-phone"></i> Contact Phone <span
+                    class="req">*</span></label>
+                <div class="input-icon-wrapper">
+                  <input type="tel" id="reg-phone" placeholder="e.g. 9876543210" required autocomplete="tel">
+                  <i class="fa-solid fa-check field-valid-icon"></i>
+                </div>
+                <small class="error-msg" id="err-phone">Please enter a valid 10-digit phone number</small>
+              </div>
+            </div>
+
+            <!-- Event Selection Dropdown -->
+            <div class="form-group">
+              <label for="reg-event"><i class="fa-solid fa-calendar-star"></i> Select Campus Event <span
+                  class="req">*</span></label>
+              <div class="select-wrapper">
+                <select id="reg-event" required>
+                  <option value="">-- Choose an event from the list --</option>
+                  <!-- Populated dynamically via script.js -->
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <small class="error-msg" id="err-event">Please select an event to register for</small>
+            </div>
+
+            <!-- Year of Study & Team Info -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="reg-year"><i class="fa-solid fa-graduation-cap"></i> Current Year of Study</label>
+                <div class="select-wrapper">
+                  <select id="reg-year">
+                    <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+                    <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+                    <option value="3rd Year (Junior)">3rd Year (Junior)</option>
+                    <option value="4th Year (Senior)" selected>4th Year (Senior)</option>
+                    <option value="Postgraduate / Research">Postgraduate / Research</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="reg-team"><i class="fa-solid fa-users-gear"></i> Team / Society Name (Optional)</label>
+                <input type="text" id="reg-team" placeholder="Leave blank if individual participant">
+              </div>
+            </div>
+
+            <!-- Terms & Consent Checkbox -->
+            <div class="form-checkbox-group">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="reg-terms" required checked>
+                <span class="checkmark"></span>
+                <span class="checkbox-label">I agree to abide by the campus event code of conduct and confirm my details
+                  are accurate.</span>
+              </label>
+              <small class="error-msg" id="err-terms">You must agree to the code of conduct to register</small>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-large w-100 btn-glow" id="btn-submit-registration">
+              <i class="fa-solid fa-ticket"></i>
+              <span>Complete Registration & Generate Pass</span>
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ANIMATED STATISTICS SECTION ==================== -->
+  <section class="stats-section" id="stats-section">
+    <div class="container">
+
+      <div class="stats-badge-container text-center mb-3">
+        <span class="stats-demo-pill"><i class="fa-solid fa-chart-line"></i> REAL-TIME CAMPUS ENGAGEMENT METRICS</span>
+      </div>
+
+      <div class="stats-grid">
+
+        <!-- Stat Item 1 -->
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-purple">
+            <i class="fa-solid fa-calendar-day"></i>
+          </div>
+          <div class="stat-number-box">
+            <span class="stat-counter" data-target="54">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <h4 class="stat-label">Upcoming Events</h4>
+          <p class="stat-desc">Scheduled for current academic semester</p>
+        </div>
+
+        <!-- Stat Item 2 -->
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-blue">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+          <div class="stat-number-box">
+            <span class="stat-counter" data-target="12850">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <h4 class="stat-label">Student Participants</h4>
+          <p class="stat-desc">Registered across all departments</p>
+        </div>
+
+        <!-- Stat Item 3 -->
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-pink">
+            <i class="fa-solid fa-people-group"></i>
+          </div>
+          <div class="stat-number-box">
+            <span class="stat-counter" data-target="48">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <h4 class="stat-label">Campus Clubs</h4>
+          <p class="stat-desc">Active technical, arts, and sports societies</p>
+        </div>
+
+        <!-- Stat Item 4 -->
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-green">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <div class="stat-number-box">
+            <span class="stat-counter" data-target="192">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <h4 class="stat-label">Successful Events</h4>
+          <p class="stat-desc">Organized and hosted through the portal</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT US SECTION ==================== -->
+  <section id="about" class="about-section">
+    <div class="container">
+
+      <div class="about-grid">
+
+        <!-- Left Visual Collage -->
+        <div class="about-visuals">
+          <div class="about-image-main-wrap">
+            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80"
+              alt="Students collaborating at campus event" class="about-img-main" loading="lazy">
+            <div class="about-floating-card">
+              <div class="floating-icon"><i class="fa-solid fa-award"></i></div>
+              <div>
+                <strong>#1 Student Portal</strong>
+                <span>Recognized by University Student Union</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Text Content -->
+        <div class="about-content">
+          <span class="section-tag"><i class="fa-solid fa-heart"></i> ABOUT CAMPUSCONNECT</span>
+          <h2 class="section-title">Bringing Campus Life and Community Together</h2>
+
+          <p class="about-lead">
+            CampusConnect was created with a clear mission: eliminate the chaos of scattered WhatsApp groups, torn
+            bulletin board flyers, and missed registration deadlines.
+          </p>
+          <p class="about-body">
+            We provide a single, unified digital destination where students can effortlessly discover what is happening
+            across the university, RSVP in seconds, and showcase their talents. From 36-hour hackathons to electrifying
+            cultural concerts and varsity sports tournaments, CampusConnect empowers both organizers and attendees.
+          </p>
+
+          <div class="about-features-grid">
+            <div class="about-feat-item">
+              <div class="feat-icon"><i class="fa-solid fa-qrcode"></i></div>
+              <div>
+                <h4>Zero-Paper Ticket Passes</h4>
+                <p>Instant digital passes with scannable entry QR codes.</p>
+              </div>
+            </div>
+
+            <div class="about-feat-item">
+              <div class="feat-icon"><i class="fa-solid fa-users-viewfinder"></i></div>
+              <div>
+                <h4>Verified Campus Clubs</h4>
+                <p>Every event is officially certified by faculty coordinators.</p>
+              </div>
+            </div>
+
+            <div class="about-feat-item">
+              <div class="feat-icon"><i class="fa-solid fa-bell"></i></div>
+              <div>
+                <h4>Real-Time Capacity Tracker</h4>
+                <p>Live seat counters prevent overbooking and long queues.</p>
+              </div>
+            </div>
+
+            <div class="about-feat-item">
+              <div class="feat-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+              <div>
+                <h4>Mobile-First Experience</h4>
+                <p>Flawless access whether on desktop, tablet, or smartphone.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIALS SECTION ==================== -->
+  <section class="testimonials-section">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <span class="section-tag"><i class="fa-solid fa-comment-dots"></i> VOICES OF THE CAMPUS</span>
+        <h2 class="section-title">What Students & Organizers Say</h2>
+        <p class="section-subtitle">Real feedback from students and club presidents across campus</p>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">
+            "Registering for TechFest took less than 30 seconds. Getting the digital entry pass saved on my phone with
+            the QR code made check-in at the auditorium door completely seamless!"
+          </p>
+          <div class="testi-user">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+              alt="Priya Sharma" class="testi-avatar" loading="lazy">
+            <div class="testi-info">
+              <strong>Priya Sharma</strong>
+              <span>B.Tech Computer Science, 3rd Year</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 (Highlighted) -->
+        <div class="testimonial-card highlighted-testi">
+          <div class="testi-badge"><i class="fa-solid fa-crown"></i> Club President</div>
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">
+            "As the lead for the Cultural Music Club, managing RSVP caps was always a nightmare. With CampusConnect, our
+            registrations hit full capacity in 4 hours and attendance tracking was effortless."
+          </p>
+          <div class="testi-user">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+              alt="Rohan Verma" class="testi-avatar" loading="lazy">
+            <div class="testi-info">
+              <strong>Rohan Verma</strong>
+              <span>President, Campus Music Society</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">
+            "I love the category filters! Finding coding hackathons and AI workshops happening this weekend was super
+            intuitive. This portal makes college life much more exciting."
+          </p>
+          <div class="testi-user">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80"
+              alt="Ananya Gupta" class="testi-avatar" loading="lazy">
+            <div class="testi-info">
+              <strong>Ananya Gupta</strong>
+              <span>Information Technology, Final Year</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ACCORDION SECTION ==================== -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <span class="section-tag"><i class="fa-solid fa-circle-question"></i> HELP & ANSWERS</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about registrations, entry passes, and event hosting</p>
+      </div>
+
+      <div class="faq-accordion-container">
+
+        <!-- FAQ Item 1 -->
+        <div class="faq-item active">
+          <button class="faq-question" aria-expanded="true">
+            <span><i class="fa-regular fa-circle-question faq-q-icon"></i> Is event registration free for university
+              students?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! All official university fests, academic symposiums, coding hackathons, and sports meets listed on
+              CampusConnect are 100% free of charge for enrolled students with a valid student roll number.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="fa-regular fa-circle-question faq-q-icon"></i> How do I present my ticket pass at the event
+              venue?</span>start chrome "c:\Users\Shristi kumari\Desktop\campus html\dashboard.html"
+            If your Node server is running (npm.cmd start):
+
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Upon registration, a digital entry pass containing a verified scannable QR code is generated. You can
+              download or print it, or simply click the <strong>"My Passes"</strong> button in the top navigation bar on
+              your phone when entering the event hall.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="fa-regular fa-circle-question faq-q-icon"></i> Can I cancel my registration if I cannot
+              attend?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. Open <strong>"My Passes"</strong> from the header at any time and click the trash icon next to any
+              registered event. This releases your seat back to the available pool for fellow students on the waitlist.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="fa-regular fa-circle-question faq-q-icon"></i> Can student clubs and societies host events
+              through this portal?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely! Registered club leads can click the <strong>"Host an Event"</strong> button in the hero
+              section or header to submit an event proposal including expected capacity, dates, venue, and faculty
+              coordinator sign-off for review.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="fa-regular fa-circle-question faq-q-icon"></i> What happens if an event reaches maximum
+              capacity?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>When all available seats are registered, the event status changes to <em>"Full / Waitlist"</em>. In case
+              of cancellations, waitlisted students receive notification on a first-come, first-served basis.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT & CTA BANNER ==================== -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+
+      <div class="contact-card">
+        <div class="contact-text-box">
+          <span class="contact-badge"><i class="fa-solid fa-headset"></i> STUDENT AFFAIRS COUNCIL</span>
+          <h2>Have questions or want to partner with CampusConnect?</h2>
+          <p>Reach out to the University Student Affairs Council or our technical development committee for event
+            inquiries.</p>
+          <div class="contact-chips">
+            <span class="contact-chip"><i class="fa-solid fa-envelope"></i> events@campusconnect.edu</span>
+            <span class="contact-chip"><i class="fa-solid fa-phone"></i> +1 (800) 555-CAMPUS</span>
+            <span class="contact-chip"><i class="fa-solid fa-location-dot"></i> Student Activity Center, Block C</span>
+          </div>
+        </div>
+        <div class="contact-action">
+          <a href="#register" class="btn btn-primary btn-large btn-glow">
+            <i class="fa-solid fa-ticket"></i>
+            <span>Register for Events Today</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container footer-container">
+
+      <!-- Col 1: Brand -->
+      <div class="footer-col brand-col">
+        <a href="#home" class="logo mb-3">
+          <div class="logo-icon-wrapper">
+            <i class="fa-solid fa-graduation-cap logo-icon"></i>
+          </div>
+          <div class="logo-text">
+            <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+            <span class="logo-sub">University Event Hub</span>
+          </div>
+        </a>
+        <p class="footer-bio">
+          Empowering college students, cultural societies, and tech clubs to collaborate, explore, and celebrate campus
+          life together.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-icon" aria-label="CampusConnect on Instagram"><i
+              class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon" aria-label="CampusConnect on LinkedIn"><i
+              class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="social-icon" aria-label="CampusConnect on Twitter / X"><i
+              class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="social-icon" aria-label="CampusConnect on GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Portals & Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#home"><i class="fa-solid fa-chevron-right"></i> Home Overview</a></li>
+          <li><a href="#events"><i class="fa-solid fa-chevron-right"></i> Browse Events</a></li>
+          <li><a href="login.html"><i class="fa-solid fa-chevron-right"></i> Student Login</a></li>
+          <li><a href="signup.html"><i class="fa-solid fa-chevron-right"></i> Create Student Account</a></li>
+          <li><a href="admin.html"><i class="fa-solid fa-chevron-right"></i> Dean / Admin Portal</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Event Domains -->
+      <div class="footer-col">
+
+        <h4 class="footer-heading">Event Domains</h4>
+        <ul class="footer-links">
+          <li><a href="#events" onclick="filterByCategory('Technology')"><i class="fa-solid fa-microchip"></i>
+              Technology & AI</a></li>
+          <li><a href="#events" onclick="filterByCategory('Cultural')"><i class="fa-solid fa-guitar"></i> Cultural
+              Concerts</a></li>
+          <li><a href="#events" onclick="filterByCategory('Coding')"><i class="fa-solid fa-code"></i> Coding
+              Hackathons</a></li>
+          <li><a href="#events" onclick="filterByCategory('Sports')"><i class="fa-solid fa-volleyball"></i>
+              Inter-College Sports</a></li>
+          <li><a href="#events" onclick="filterByCategory('Business')"><i class="fa-solid fa-briefcase"></i>
+              Entrepreneurship</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Newsletter / College Notice -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Weekly Event Digest</h4>
+        <p class="footer-small">Get upcoming weekend fests and workshop alerts delivered to your university mailbox.</p>
+        <form class="footer-subscribe-form" id="newsletter-form">
+          <div class="subscribe-input-wrap">
+            <input type="email" id="newsletter-email" placeholder="student@campus.edu" required autocomplete="email">
+            <button type="submit" class="btn-subscribe" title="Subscribe to event digest">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+        <span class="demo-badge-small"><i class="fa-solid fa-shield-check"></i> Official Student Affairs Portal &bull;
+          Academic Evaluation Build</span>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright">
+          &copy; 2026 <strong>CampusConnect</strong> — University Event Hub & Registration Portal. Powered by HTML5,
+          CSS3, Vanilla JS, Node.js, Express & SQLite.
+        </p>
+        <p class="project-note">
+          Secured with Bcrypt &bull; Role-Based Sessions &bull; Real-Time Capacity Tracking
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== BACK TO TOP BUTTON ==================== -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ==================== MODAL 1: EVENT DETAILS MODAL ==================== -->
+  <div class="modal-backdrop" id="event-details-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-large">
+      <button class="modal-close-btn" id="close-details-modal" aria-label="Close details modal">&times;</button>
+      <div class="modal-body" id="details-modal-body">
+        <!-- Injected via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: DIGITAL ENTRY PASS TICKET MODAL ==================== -->
+  <div class="modal-backdrop" id="ticket-pass-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-ticket">
+      <button class="modal-close-btn" id="close-ticket-modal" aria-label="Close ticket modal">&times;</button>
+
+      <div class="ticket-wrapper" id="printable-ticket">
+
+        <!-- Holographic Security Top Strip -->
+        <div class="ticket-holo-strip"></div>
+
+        <!-- Ticket Header -->
+        <div class="ticket-header">
+          <div class="ticket-logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Campus<strong class="text-accent">Connect</strong></span>
+          </div>
+          <span class="ticket-type-badge"><i class="fa-solid fa-shield-check"></i> VERIFIED STUDENT PASS</span>
+        </div>
+
+        <!-- Ticket Main Info -->
+        <div class="ticket-body">
+          <div class="ticket-event-badge" id="ticket-category-badge">Technology Fest</div>
+          <h2 class="ticket-event-name" id="ticket-event-name">TechFest 2026: Quantum Leap</h2>
+
+          <div class="ticket-meta-grid">
+            <div class="ticket-meta-item">
+              <span class="t-label">STUDENT NAME</span>
+              <strong class="t-value" id="ticket-student-name">Alex Morgan</strong>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">STUDENT ROLL NO.</span>
+              <strong class="t-value text-purple" id="ticket-student-id">CS2024101</strong>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">DEPARTMENT</span>
+              <strong class="t-value" id="ticket-department">Computer Science</strong>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">REGISTRATION PASS ID</span>
+              <strong class="t-value text-pink" id="ticket-pass-id">CC-2026-8942</strong>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">EVENT DATE & TIME</span>
+              <strong class="t-value" id="ticket-datetime">Oct 28, 2026 • 10:00 AM</strong>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">VENUE & HALL</span>
+              <strong class="t-value" id="ticket-venue">Main University Auditorium</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ticket Tear Divider with Realistic Cutout Notches -->
+        <div class="ticket-tear">
+          <div class="notch notch-left"></div>
+          <div class="dashed-line"></div>
+          <div class="notch notch-right"></div>
+        </div>
+
+        <!-- Ticket Barcode & Scannable QR Stubs -->
+        <div class="ticket-stub">
+          <div class="stub-qr">
+            <div class="qr-box">
+              <i class="fa-solid fa-qrcode"></i>
+              <div class="qr-center-seal"><i class="fa-solid fa-graduation-cap"></i></div>
+            </div>
+            <span class="qr-hint">Scan at Hall Entrance</span>
+          </div>
+          <div class="stub-details">
+            <div class="barcode-graphic"></div>
+            <p class="stub-code" id="ticket-barcode-num">CC-ENTRY-PASS-VERIFIED-2026</p>
+            <span class="stub-status"><i class="fa-solid fa-circle-check"></i> Registration Authenticated &
+              Validated</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action buttons below ticket -->
+      <div class="ticket-actions">
+        <button class="btn btn-secondary" id="btn-print-ticket">
+          <i class="fa-solid fa-print"></i> Print Ticket
+        </button>
+        <button class="btn btn-primary btn-glow" id="btn-download-ticket">
+          <i class="fa-solid fa-download"></i> Save Pass
+        </button>
+        <button class="btn btn-glass" id="btn-done-ticket">
+          <i class="fa-solid fa-check"></i> Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: MY REGISTERED TICKETS DRAWER ==================== -->
+  <div class="modal-backdrop" id="my-tickets-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-medium">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <i class="fa-solid fa-ticket-simple text-purple"></i>
+          <h3>My Registered Event Passes</h3>
+        </div>
+        <button class="modal-close-btn" id="close-my-tickets-modal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-subtitle">Your confirmed event passes and entrance credentials:</p>
+        <div class="my-tickets-list" id="my-tickets-list">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-close-my-tickets">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 4: HOST AN EVENT PROPOSAL ==================== -->
+  <div class="modal-backdrop" id="host-event-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-medium">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <i class="fa-solid fa-bullhorn text-accent"></i>
+          <h3>Submit Event Proposal</h3>
+        </div>
+        <button class="modal-close-btn" id="close-host-modal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-subtitle">Represent a university club or society? Submit an event for council approval:</p>
+        <form id="host-event-form">
+          <div class="form-group">
+            <label for="host-club-name"><i class="fa-solid fa-users"></i> Club / Society Name <span
+                class="req">*</span></label>
+            <input type="text" id="host-club-name" placeholder="e.g. Robotics & AI Club" required>
+          </div>
+          <div class="form-group">
+            <label for="host-event-title"><i class="fa-solid fa-calendar-star"></i> Proposed Event Title <span
+                class="req">*</span></label>
+            <input type="text" id="host-event-title" placeholder="e.g. National Autonomous Drone Challenge" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-half">
+              <label for="host-category"><i class="fa-solid fa-shapes"></i> Category</label>
+              <div class="select-wrapper">
+                <select id="host-category">
+                  <option value="Technology">Technology</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Coding">Coding</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Creative">Creative</option>
+                  <option value="Business">Business</option>
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+            <div class="form-group col-half">
+              <label for="host-capacity"><i class="fa-solid fa-user-group"></i> Expected Capacity</label>
+              <input type="number" id="host-capacity" placeholder="e.g. 250" min="20" max="2000" value="150">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="host-desc"><i class="fa-solid fa-align-left"></i> Event Summary & Target Audience</label>
+            <textarea id="host-desc" rows="3"
+              placeholder="Briefly describe the theme, activities, and faculty coordinator..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 btn-glow">
+            <i class="fa-solid fa-paper-plane"></i> Submit Proposal for Review
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="script.js"></script>
+</body>
+
+</html>
