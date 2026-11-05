@@ -1,307 +1,390 @@
 # 🎓 CampusConnect — Campus Event Management & Registration Portal
 
-> **Full-Stack B.Tech College Major/Minor Project Presentation**  
-> Built with **HTML5, CSS3, Modern Vanilla JavaScript**, **Node.js, Express.js**, and **SQLite3**.
+<div align="center">
+
+![CampusConnect Banner](https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&h=350&q=80)
+
+### 🚀 Next-Generation University Event Lifecycle & Digital Pass System
+**Full-Stack B.Tech / Academic Major & Minor Engineering Capstone Project**
+
+[![Node.js](https://img.shields.io/badge/Node.js-v20%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-v4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![SQLite3](https://img.shields.io/badge/SQLite-Native_v3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![JavaScript](https://img.shields.io/badge/Vanilla_JS-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/)
+[![HTML5](https://img.shields.io/badge/HTML5-Semantic_Accessible-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
+[![CSS3](https://img.shields.io/badge/CSS3-Glassmorphism_DarkNavy-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+[🌟 Live Repository](https://github.com/Shristikumari06/campus-event-management) • [📖 Documentation](#-core-system-modules) • [⚡ Quick Start](#-quick-start--installation) • [🎯 Viva Walkthrough](#-academic-submission--viva-presentation-guide)
+
+</div>
 
 ---
 
-## 🌟 1. Project Overview
+## 📑 Table of Contents
 
-**CampusConnect** is a full-stack web application developed to eliminate the chaos of scattered WhatsApp notices, bulletin board posters, and missed registration deadlines across university campuses.
-
-It provides a single, unified digital hub where college students can:
-1. Explore upcoming campus hackathons, cultural concerts, sports meets, and tech symposiums.
-2. Filter events by domain/category, search in real-time, and view remaining seat capacity.
-3. Reserve seats with 1-click registration protected by server-side verification.
-4. Obtain instant **digital scannable entry passes** (with unique ticket IDs and barcodes).
-5. Manage registrations, cancel seats to free capacity for fellow students, and update academic profiles.
-6. Administrators (Dean of Student Affairs / Faculty Leads) can monitor metrics, create/edit/delete events, and manage student rosters.
-
----
-
-## 🛠️ 2. Technology Stack
-
-### **Frontend**
-- **HTML5**: Semantic markup, accessible labels (`aria-*`), mobile-first responsive viewports.
-- **CSS3**: Custom design tokens, glassmorphism, gradient accents, micro-animations, media queries (`style.css`, `auth.css`, `dashboard.css`).
-- **Vanilla JavaScript (ES6+)**: Modular client architecture (`auth.js`, `events.js`, `dashboard.js`, `registrations.js`, `admin.js`, `main.js`), debounced search, DOM manipulation, confetti engine.
-- *No heavy frontend frameworks (no React, Next.js, Angular, or Vue) to ensure clean beginner-friendly presentation and direct browser execution.*
-
-### **Backend**
-- **Node.js**: Asynchronous JavaScript runtime environment.
-- **Express.js**: RESTful API routing, static file delivery, error handling middleware.
-- **express-session & connect-sqlite3**: Server-side session management with persistent SQLite session storage.
-- **express-rate-limit**: Defense against brute-force credential stuffing attacks on authentication endpoints.
-
-### **Database & Security**
-- **SQLite3**: Lightweight, zero-config, persistent relational database stored as `database/campusconnect.db`.
-- **bcryptjs**: 100% pure JavaScript cryptographic hashing algorithm for student and admin passwords (10 salt rounds).
-- **Parameterized SQL Queries**: Complete SQL injection defense via `?` parameterized placeholders.
-- **Role-Based Access Control (RBAC)**: Backend verification separating student privileges from administrator powers.
+- [🌟 1. Executive Summary & Problem Statement](#-1-executive-summary--problem-statement)
+- [✨ 2. Flagship Capabilities & Technical Innovations](#-2-flagship-capabilities--technical-innovations)
+- [🎯 3. Core System Modules (Prompt Requirements)](#-3-core-system-modules-prompt-requirements)
+- [🏗️ 4. System Architecture & Information Flow](#️-4-system-architecture--information-flow)
+- [🛠️ 5. Technology Stack Deep-Dive](#️-5-technology-stack-deep-dive)
+- [🗄️ 6. Relational Database Schema & Data Models](#️-6-relational-database-schema--data-models)
+- [📡 7. RESTful API Endpoint Directory](#-7-restful-api-endpoint-directory)
+- [⚡ 8. Quick Start & Installation Guide](#-8-quick-start--installation-guide)
+- [🔐 9. Authentication & Pre-Seeded Evaluation Credentials](#-9-authentication--pre-seeded-evaluation-credentials)
+- [🛡️ 10. Security & Defense-in-Depth Mechanisms](#️-10-security--defense-in-depth-mechanisms)
+- [🎓 11. Academic Submission & Viva Presentation Guide](#-11-academic-submission--viva-presentation-guide)
+- [📂 12. Complete Directory Architecture](#-12-complete-directory-architecture)
 
 ---
 
-## 📁 3. Project Structure
+## 🌟 1. Executive Summary & Problem Statement
+
+Across higher education universities and engineering institutions, student event management has historically suffered from:
+- 📢 **Communication Fragmentation**: Scattered WhatsApp groups, telegram notices, paper bulletin board flyers, and missed deadlines.
+- 📉 **Auditorium Chaos & Over-Registration**: Manual Google Forms or paper sheets causing severe hall overcrowding, duplicate registrations, and inaccurate headcounts.
+- ❌ **Lack of Verification**: Vulnerable gate check-ins with no scannable tickets, no student eligibility checks, and zero real-time attendee tracking.
+
+### 💡 The CampusConnect Solution
+**CampusConnect** is a centralized, high-performance web portal built from the ground up to automate the entire university event lifecycle. Organizers have absolute control over seat capacity, eligibility criteria, and gate scanners; students enjoy an ultra-fast, luxury glassmorphic interface to reserve seats with 1-click and immediately download **official, standalone vector PDF entry passes**.
+
+---
+
+## ✨ 2. Flagship Capabilities & Technical Innovations
+
+- 📄 **Direct Client-Side Vector PDF Generator (`js/pdf-generator.js`)**:
+  - Automatically compiles standard **PDF 1.4 vector binary streams** in memory.
+  - Zero external npm/cloud dependencies; generates printable entry passes (`CampusConnect-Pass-*.pdf`) with embedded barcodes, student roll IDs, and gate instructions.
+- 🛡️ **Live Auditorium Gate Control & Ticket Scanner (`admin.html`)**:
+  - Organizers and security personnel scan or input ticket codes (`CC-2026-01-0042`) at hall entrances for instantaneous check-in validation and attendance status toggling.
+- 🎯 **Eligibility Criteria Enforcement**:
+  - Organizers define precise student prerequisites (e.g., *"Teams of 2-4 Students (UG/PG All Branches)"*, *"Valid Student ID Required"*), visible across catalog cards, detailed modals, and downloaded passes.
+- 📊 **Real-Time Seat Countdown & Anti-Overbooking Engine**:
+  - Live visual progress bars and dynamic counters (`"115 remaining of 400 seats"`); server-side SQLite transactions instantly reject registrations once capacity is filled (`HTTP 400`) and disallow duplicates (`HTTP 409 Conflict`).
+- 🏆 **Ceremonial University Certificate of Participation**:
+  - Built-in credential engine rendering gold-framed official certificates with Dean signatures, verification codes, and 1-click **PDF download**.
+- 📅 **1-Click Google Calendar Synchronization**:
+  - Pre-computes event schedules, venue coordinates, and student pass IDs into direct Google Calendar templates.
+- 📑 **Participant Roster CSV Exporter**:
+  - Administrative 1-click export of registered student lists (Roll IDs, departments, emails, timestamps, attendance status) for departmental accreditation.
+- ⚡ **Dual-Runtime Execution Support**:
+  - Works **100% offline via direct browser file access (`file:///`)** AND as a full-stack production server via Node.js/Express (`http://localhost:3000` / `3001`).
+
+---
+
+## 🎯 3. Core System Modules (Prompt Requirements)
+
+| Module | Purpose | Key Functionality |
+| :--- | :--- | :--- |
+| 🎪 **Multi-Category Event Management** | Organizes diverse campus activities | Dedicated discovery for **College Fests**, **Workshops**, **Seminars**, **Competitions/Hackathons**, **Technical**, **Cultural**, and **Sports**. |
+| ✍️ **Organizer Event Creation** | Administrative event builder | Configure schedules (start/end/deadline), venues, descriptions, **Eligibility Criteria**, poster URLs, and max seat limits. |
+| 🎟️ **Student Registration & RSVP** | Frictionless seat reservation | 1-click instant registration, animated confetti celebrations, dynamic seat allotment, and duplicate booking prevention. |
+| 🪑 **Live Seat-Limit & Availability** | Accurate capacity tracking | Real-time seat calculation, color-coded capacity meters, automatic `Full Capacity` / `Closed` lockout badges. |
+| 📱 **Downloadable & Printable PDF Passes** | Official gate verification slip | Produces downloadable `.pdf` slips containing official crests, barcodes, student credentials, and venue reporting rules. |
+| 🔔 **Notification & Status Feedback** | Instant user guidance | Toast alert notifications for seat bookings, cancellations, gate verifications, and quota alerts. |
+| 🛡️ **Organizer / Dean Dashboard** | Operational control tower | Macro metrics (total students, active events, registrations), auditorium ticket scanner, event CRUD, and roster management. |
+
+---
+
+## 🏗️ 4. System Architecture & Information Flow
+
+```mermaid
+flowchart TD
+    subgraph ClientLayer ["Client Layer (Pure HTML5 / CSS3 / Vanilla JS)"]
+        UI_Home["Landing Portal (index.html)"]
+        UI_Events["Event Catalog & Filters (events.html)"]
+        UI_Passes["My Digital Passes (my-registrations.html)"]
+        UI_Admin["Organizer Operations Center (admin.html)"]
+        PDF_Engine["Native Vector PDF Generator (pdf-generator.js)"]
+    end
+
+    subgraph ServerLayer ["Server Layer (Node.js & Express.js)"]
+        Router_Auth["/api/auth (Login / Signup / Sessions)"]
+        Router_Events["/api/events (Catalog / Filter / Details)"]
+        Router_Reg["/api/registrations (RSVP / Cancel / Passes)"]
+        Router_Admin["/api/admin (Stats / CRUD / Scanner / Roster)"]
+        Middleware["Security & Auth Middleware (BCrypt / RateLimit)"]
+    end
+
+    subgraph StorageLayer ["Storage Layer (Relational SQLite3)"]
+        DB_Users[("USERS Table")]
+        DB_Events[("EVENTS Table")]
+        DB_Regs[("REGISTRATIONS Table")]
+    end
+
+    UI_Events --> Router_Events
+    UI_Events --> Router_Reg
+    UI_Admin --> Router_Admin
+    UI_Passes --> Router_Reg
+    UI_Passes --> PDF_Engine
+
+    Router_Auth --> Middleware
+    Router_Events --> Middleware
+    Router_Reg --> Middleware
+    Router_Admin --> Middleware
+
+    Middleware --> DB_Users
+    Middleware --> DB_Events
+    Middleware --> DB_Regs
+```
+
+---
+
+## 🛠️ 5. Technology Stack Deep-Dive
+
+### 🎨 Frontend Architecture
+- **HTML5 (Semantic & Accessible)**: Built strictly with semantic elements (`<header>`, `<main>`, `<section>`, `<article>`, `<table>`), fully compliant with screen readers and keyboard navigation.
+- **Modern CSS3 (Design Tokens & Glassmorphism)**:
+  - Custom CSS variables for luxury dark navy palette (`#070a14`), neon pink (`#ff0080`), electric cyan (`#06b6d4`), and university gold (`#d4af37`).
+  - Backdrop filters (`backdrop-filter: blur(16px)`), micro-interactions, responsive flex/grid viewports.
+- **Vanilla ES6+ JavaScript**:
+  - Zero heavy framework dependencies (eliminating megabytes of virtual-DOM bloat).
+  - Modular scripts for authentication, catalog filtering, real-time search debouncing, confetti animations, and PDF rendering.
+
+### ⚙️ Backend Architecture
+- **Node.js (v20+ / v26 Compatible)**: Event-driven asynchronous runtime.
+- **Express.js (v4.21+)**: High-performance HTTP routing, static file delivery, parameter validation, and JSON REST APIs.
+- **Built-in Session Management**: Safe server-side sessions with persistent cookies (`SameSite: 'lax'`, `HttpOnly`).
+- **Express Rate Limiting**: Guard against brute-force password stuffing on authentication routes.
+
+### 🗄️ Relational Persistence & Cryptography
+- **SQLite3 Relational Database**: Zero-configuration, file-based SQL database (`database/campusconnect.db`) with foreign key constraints, unique indexes, and cascade deletions.
+- **BCrypt.js Cryptographic Hashing**: Salted password hashing (10 salt rounds), ensuring student passwords are never stored in plaintext.
+
+---
+
+## 🗄️ 6. Relational Database Schema & Data Models
+
+### 1. `USERS` Table (Student & Admin Accounts)
+```sql
+CREATE TABLE USERS (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL COLLATE NOCASE,
+  student_id TEXT UNIQUE NOT NULL COLLATE NOCASE,
+  department TEXT NOT NULL,
+  study_year TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'student' CHECK(role IN ('student', 'admin')),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 2. `EVENTS` Table (Campus Events & Capacities)
+```sql
+CREATE TABLE EVENTS (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  category TEXT NOT NULL,
+  image_url TEXT,
+  venue TEXT NOT NULL,
+  start_datetime TEXT NOT NULL,
+  end_datetime TEXT NOT NULL,
+  registration_deadline TEXT NOT NULL,
+  capacity INTEGER NOT NULL CHECK(capacity > 0),
+  eligibility TEXT DEFAULT 'Open to All Students',
+  organizer_id INTEGER,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (organizer_id) REFERENCES USERS(id) ON DELETE SET NULL
+);
+```
+
+### 3. `REGISTRATIONS` Table (Seat Bookings & Attendance)
+```sql
+CREATE TABLE REGISTRATIONS (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  registration_status TEXT NOT NULL DEFAULT 'confirmed' CHECK(registration_status IN ('confirmed', 'cancelled', 'attended')),
+  registered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE,
+  FOREIGN KEY (event_id) REFERENCES EVENTS(id) ON DELETE CASCADE,
+  UNIQUE(user_id, event_id)
+);
+```
+
+---
+
+## 📡 7. RESTful API Endpoint Directory
+
+### 🔐 Authentication (`/api/auth`)
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/signup` | Registers a new student account and hashes password | Public |
+| `POST` | `/api/auth/login` | Authenticates credentials and starts session | Public |
+| `POST` | `/api/auth/logout` | Destroys active session and clears cookies | Authenticated |
+| `GET` | `/api/auth/me` | Returns profile of currently authenticated user | Authenticated |
+| `PUT` | `/api/auth/profile` | Updates department, year, or credentials | Authenticated |
+
+### 🎪 Events (`/api/events`)
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/events` | Fetches events catalog with seat counts & filters | Public |
+| `GET` | `/api/events/:id` | Returns complete details, venue, & organizer info | Public |
+| `GET` | `/api/events/featured` | Spotlight featured events for landing page | Public |
+| `GET` | `/api/events/categories/summary` | Real-time event counter per category | Public |
+
+### 🎟️ Registrations (`/api/registrations`)
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/registrations` | Reserves seat, verifies capacity & deadline | Student |
+| `GET` | `/api/registrations/my` | Retrieves user's registered passes & ticket IDs | Student |
+| `DELETE` | `/api/registrations/:id` | Cancels pass and releases seat back to pool | Student |
+
+### 🛡️ Organizer Admin (`/api/admin`)
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/admin/stats` | Aggregated dashboard analytics | Admin |
+| `POST` | `/api/admin/events` | Creates new event with eligibility & limits | Admin |
+| `PUT` | `/api/admin/events/:id` | Updates event schedule, venue, or capacity | Admin |
+| `DELETE` | `/api/admin/events/:id` | Removes event and cascades registrations | Admin |
+| `GET` | `/api/admin/events/:id/participants` | Live attendee roster with roll IDs | Admin |
+| `GET` | `/api/admin/events/:id/participants/export` | Downloads participant roster as CSV | Admin |
+| `PATCH` | `/api/admin/registrations/:id/status` | Toggles status (`confirmed`/`attended`/`cancelled`) | Admin |
+
+---
+
+## ⚡ 8. Quick Start & Installation Guide
+
+### Option A: Offline / Zero-Setup Mode (Direct Browser Execution)
+1. Clone or download the repository to your computer:
+   ```bash
+   git clone https://github.com/Shristikumari06/campus-event-management.git
+   ```
+2. Navigate to the project directory and double-click **`index.html`** or **`events.html`** in any web browser (Google Chrome, Microsoft Edge, Brave, Firefox, or Safari).
+3. The application runs seamlessly with pre-loaded mock catalog data and local persistent browser storage!
+
+---
+
+### Option B: Full-Stack Node.js Server Mode
+
+#### 1. Prerequisites
+- **Node.js**: v18 or later ([Download Node.js](https://nodejs.org/))
+
+#### 2. Install Dependencies
+Open terminal in the project directory:
+```bash
+npm install
+```
+
+#### 3. Seed Database & Start Server
+- **One-Click Launch (Windows)**:
+  Simply double-click **`run.bat`**! It starts the server, connects to SQLite, and automatically opens your browser.
+- **Manual Launch (Terminal / macOS / Linux)**:
+  ```bash
+  # Initialize and seed database with flagship campus events
+  node database/seed.js
+
+  # Start the Express server
+  npm start
+  ```
+
+#### 4. Access the Application
+Open your browser and navigate to:
+```
+http://localhost:3000
+```
+*(Note: If port 3000 is occupied by another application, CampusConnect automatically falls back to `http://localhost:3001` without crashing).*
+
+---
+
+## 🔐 9. Authentication & Pre-Seeded Evaluation Credentials
+
+The database comes pre-seeded with administrator credentials and sample student accounts for instant evaluation:
+
+### 🛡️ Dean / Event Organizer (Admin Account)
+- **Email**: `admin@campusconnect.edu`
+- **Password**: `Admin@12345`
+- **Privileges**: Create/edit events, view participant rosters, export CSV reports, and operate the Gate Ticket Scanner.
+
+### 🎓 Demo Student Account
+- **Email**: `student@campusconnect.edu` (or click *"1-Click Demo Fill"* on login)
+- **Password**: `Student@123`
+- **Privileges**: Browse events, reserve seats, view and download PDF passes, and claim certificates.
+
+---
+
+## 🛡️ 10. Security & Defense-in-Depth Mechanisms
+
+1. **SQL Injection Defense**: Every database operation utilizes parameterized prepared statements (`?` bindings), eliminating injection vulnerabilities.
+2. **Password Cryptography**: Passwords undergo one-way cryptographic salting and hashing using `bcryptjs` with 10 cost factors.
+3. **Session Hardening**: Server sessions are signed with cryptographic secrets; cookies are configured with `HttpOnly` and `SameSite: 'lax'` to block XSS session hijacking.
+4. **Brute-Force Rate Limiting**: Authentication endpoints are rate-limited to 50 attempts per 15-minute window via `express-rate-limit`.
+5. **Role-Based Access Control (RBAC)**: Server-side middleware verifies `role === 'admin'` before allowing access to management, event deletion, or participant rosters.
+
+---
+
+## 🎓 11. Academic Submission & Viva Presentation Guide
+
+When presenting **CampusConnect** to professors, external examiners, or project evaluators, follow this 4-step walkthrough:
 
 ```
-campusconnect/
-├── public/                     # Static frontend client assets
-│   ├── index.html              # Landing & Welcome portal page
-│   ├── login.html              # Modern split-screen authentication
-│   ├── signup.html             # Student account registration
-│   ├── dashboard.html          # Student dashboard & onboarding guide
-│   ├── events.html             # Events catalog (search, filter, sort)
-│   ├── event-details.html      # Dedicated event overview & RSVP
-│   ├── my-registrations.html   # Student passes & QR entry passes
-│   ├── profile.html            # Profile settings & password change
-│   ├── admin.html              # Dean / Administrator dashboard
-│   ├── css/
-│   │   ├── style.css           # Core theme tokens, navbar, modals
-│   │   ├── auth.css            # Auth split-screen & form validation
-│   │   └── dashboard.css       # Metrics cards, stepper, data tables
-│   └── js/
-│       ├── main.js             # Session sync, topbar state, toasts
-│       ├── auth.js             # Login, signup, password toggles, demo fill
-│       ├── events.js           # Event catalog loader, filter, quick RSVP
-│       ├── dashboard.js        # Student metrics & recommendations
-│       ├── registrations.js    # My Passes, QR ticket modal, cancel RSVP
-│       └── admin.js            # Admin metrics, CRUD modals, rosters
+[Step 1: Student Discovery]
+Browse Events -> Filter by "College Fest" / "Workshop" -> Inspect "Eligibility Criteria" & Live Capacity Bar
+
+[Step 2: Instant Reservation & PDF Download]
+Click "Register Free" -> Trigger Confetti & Toast -> Modal reveals Barcode Pass -> Click "Download PDF Pass"
+
+[Step 3: Official Certificate Generation]
+Visit "My Passes" -> Click "Certificate" -> Preview Gold-Bordered University Credential -> Click "Download PDF Certificate"
+
+[Step 4: Organizer Gate Control & Roster CSV]
+Visit "admin.html" -> Use Auditorium Scanner with ticket code "CC-2026-01-0042" -> Verify Attendee -> Export Roster CSV
+```
+
+---
+
+## 📂 12. Complete Directory Architecture
+
+```
+campus-event-management/
+├── index.html                   # University landing portal & hero section
+├── events.html                  # Public event catalog (search, filter, sort)
+├── event-details.html           # Dedicated event deep-dive & seat counter
+├── my-registrations.html        # Student passes & certificate portal
+├── admin.html                   # Dean / Organizer operations dashboard
+├── dashboard.html               # Student onboarding & activity hub
+├── login.html                   # Split-screen secure student/admin login
+├── signup.html                  # Student registration & department select
+├── profile.html                 # Profile management & password update
+├── style.css                    # Master design tokens & glassmorphism theme
+├── run.bat                      # 1-click Windows server launcher
+├── server.js                    # Express application entrypoint
+├── package.json                 # Project configuration & npm scripts
+├── README.md                    # Complete technical specification
+├── .gitignore                   # Repository clean-up exclusion rules
+├── css/
+│   ├── auth.css                 # Authentication styles & form validation
+│   └── dashboard.css            # Analytics cards, data tables, badges
+├── js/
+│   ├── pdf-generator.js         # Native client-side vector PDF engine
+│   ├── events.js                # Catalog loader, search debouncer, RSVP
+│   ├── registrations.js         # Pass viewer, certificate modal, cancel RSVP
+│   ├── admin.js                 # Admin metrics, event CRUD, ticket scanner
+│   ├── auth.js                  # Login/signup handler, session validator
+│   ├── dashboard.js             # Student metrics & personalized suggestions
+│   └── main.js                  # Universal session header & toast manager
 ├── database/
-│   ├── db.js                   # SQLite connection & Promise wrappers
-│   ├── init.js                 # Automatic schema creation & indexes
-│   ├── seed.js                 # Flagship campus events & admin seeder
-│   └── campusconnect.db        # Persistent SQLite database file
+│   ├── db.js                    # SQLite connection & Promise interface
+│   ├── init.js                  # Database schema creator & migrations
+│   └── seed.js                  # Pre-seeded campus events & admin seeder
 ├── middleware/
-│   ├── auth.js                 # requireAuth, requireAdmin middleware
-│   └── rateLimiter.js          # Rate limiter for auth endpoints
+│   ├── auth.js                  # Session authentication & RBAC guards
+│   └── rateLimiter.js           # IP-based rate limiting defense
 ├── routes/
-│   ├── auth.js                 # Signup, login, logout, me, profile
-│   ├── events.js               # Events list, categories, featured, ID
-│   ├── registrations.js        # Event RSVP, My Passes, cancellation
-│   └── admin.js                # Analytics, event CRUD, participant rosters
-├── server.js                   # Express application entrypoint
-├── package.json                # Dependencies and npm scripts
-├── .env.example                # Sample environment variables
-├── .gitignore                  # Git ignore rules
-└── README.md                   # Complete documentation & testing guide
+│   ├── auth.js                  # Signup, login, logout, profile routes
+│   ├── events.js                # Events listing, search, categories
+│   ├── registrations.js         # Seat reservation, ticket pass generation
+│   └── admin.js                 # Event CRUD, gate verification, roster CSV
+└── public/                      # Static mirror for Express server delivery
 ```
 
 ---
 
-## 🗄️ 4. Database Architecture & Relationships
+<div align="center">
 
-CampusConnect utilizes a relational SQLite schema consisting of 3 core entities:
+**Developed with ❤️ for College Students & University Event Organizers**  
+*CampusConnect — Eliminating campus event chaos, one seat at a time.*
 
-```
-+--------------------+        1:N        +-------------------------+
-|       USERS        | ----------------< |      REGISTRATIONS      |
-+--------------------+                   +-------------------------+
-| id (PK)            |                   | id (PK)                 |
-| full_name          |                   | user_id (FK -> USERS)   |
-| email (UNIQUE)     |                   | event_id (FK -> EVENTS) |
-| student_id (UNIQUE)|                   | registration_status     |
-| department         |                   | registered_at           |
-| study_year         |                   +-------------------------+
-| password_hash      |                               ^
-| role               |                               | N:1
-| created_at         |                   +-------------------------+
-+--------------------+                   |         EVENTS          |
-         |                               +-------------------------+
-         | 1:N (Organizer)               | id (PK)                 |
-         +-----------------------------> | title                   |
-                                         | description             |
-                                         | category                |
-                                         | image_url               |
-                                         | venue                   |
-                                         | start_datetime          |
-                                         | end_datetime            |
-                                         | registration_deadline   |
-                                         | capacity                |
-                                         | organizer_id (FK)       |
-                                         | created_at              |
-                                         +-------------------------+
-```
-
-### **Beginner-Friendly Explanation of Relationships**
-1. **USERS to REGISTRATIONS (One-to-Many, `1:N`)**:  
-   One student can register for multiple different campus events over the semester. Each row in `REGISTRATIONS` links back to `USERS.id`.
-2. **EVENTS to REGISTRATIONS (One-to-Many, `1:N`)**:  
-   One campus event (e.g., TechFest) receives multiple registrations from different students.
-3. **USERS and EVENTS (`N:M` Many-to-Many Junction)**:  
-   The `REGISTRATIONS` table acts as an associative junction table between `USERS` and `EVENTS`.  
-   - A `UNIQUE(user_id, event_id)` constraint prevents any student from registering twice for the same event.
-4. **USERS to EVENTS (Organizer `1:N`)**:  
-   The `organizer_id` in `EVENTS` references the administrator/faculty account that created and coordinates the event.
-
----
-
-## 🚀 5. Getting Started (Setup & Run)
-
-### **Prerequisites**
-- [Node.js](https://nodejs.org/) (Version 16, 18, 20, or higher).
-- npm (installed automatically with Node.js).
-
-### **Installation Steps**
-1. Open terminal / PowerShell in the project directory:
-   ```bash
-   cd "c:\Users\Shristi kumari\Desktop\campus html"
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. (Optional) Configure environment variables:
-   Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Start the server:
-   ```bash
-   npm start
-   ```
-   *(For auto-reload during development: `npm run dev`)*
-
-5. Open your web browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
-
----
-
-## 🔑 6. Evaluator & Presentation Demo Credentials
-
-The database initializes automatically with default credentials so you can demonstrate the portal immediately during college reviews:
-
-### **Administrator / Dean Account**
-- **Email:** `admin@campusconnect.edu`
-- **Password:** `Admin@12345`
-- **Role:** `admin` (Full event creation, participant roster viewing, seating cap control)
-
-### **Sample Student Registration**
-- You can register any new student directly via the **Create Account** button on `/signup.html`.
-- Or click the **"Auto-Fill Presentation Data"** button on the signup page to generate an instant student account!
-
----
-
-## 📡 7. REST API Endpoints Reference
-
-### **Authentication (`/api/auth`)**
-| Method | Endpoint | Description | Access |
-|---|---|---|---|
-| `POST` | `/api/auth/signup` | Register new student with roll number & department | Public |
-| `POST` | `/api/auth/login` | Authenticate user & regenerate session | Public |
-| `POST` | `/api/auth/logout` | Destroy session and clear cookie | Public |
-| `GET` | `/api/auth/me` | Fetch currently authenticated user | Public / User |
-| `POST` | `/api/auth/forgot-password` | Safe password reset token request | Public |
-| `PUT` | `/api/auth/profile` | Update student name, department, year | Authenticated |
-| `PUT` | `/api/auth/change-password`| Secure password change with verification | Authenticated |
-
-### **Events (`/api/events`)**
-| Method | Endpoint | Description | Access |
-|---|---|---|---|
-| `GET` | `/api/events` | List events with category filters, search, sort | Public |
-| `GET` | `/api/events/:id` | Fetch detailed single event with remaining seats | Public |
-| `GET` | `/api/events/featured` | Fetch top upcoming events for hero spotlight | Public |
-| `GET` | `/api/events/categories/summary` | Live event counts grouped by domain | Public |
-
-### **Registrations (`/api/registrations`)**
-| Method | Endpoint | Description | Access |
-|---|---|---|---|
-| `POST` | `/api/registrations` | Reserve seat (checks deadline, capacity, duplicate) | Student |
-| `GET` | `/api/registrations/my` | View logged-in student's active passes | Student |
-| `DELETE` | `/api/registrations/:id` | Cancel seat and release pass back to pool | Student / Admin |
-
-### **Administrator (`/api/admin`)**
-| Method | Endpoint | Description | Access |
-|---|---|---|---|
-| `GET` | `/api/admin/stats` | High-level campus metrics (students, events, RSVPs)| Admin Only |
-| `POST` | `/api/admin/events` | Create a new campus event | Admin Only |
-| `PUT` | `/api/admin/events/:id` | Update event venue, dates, or seating capacity | Admin Only |
-| `DELETE` | `/api/admin/events/:id` | Remove event and associated registrations | Admin Only |
-| `GET` | `/api/admin/events/:id/participants` | View all students registered for an event | Admin Only |
-| `PATCH` | `/api/admin/registrations/:id/status` | Mark attendance (`attended`, `confirmed`, `cancelled`)| Admin Only |
-
----
-
-## ✅ 8. College Presentation Testing Checklist
-
-Use this step-by-step checklist to demonstrate your project to evaluators and professors:
-
-- [x] **1. Welcome Experience**:
-  - Open `http://localhost:3000`.
-  - Notice the **"Login"** and **"Create Account"** buttons in the navigation header.
-  - Notice the live countdown timer ticking down to the flagship fest.
-- [x] **2. Student Signup**:
-  - Click **Create Account** (`/signup.html`).
-  - Click **"Auto-Fill Sample Student Details"** for fast demo filling.
-  - Click **Create Student Account**.
-  - Verified: Student is auto-logged in and redirected to their personal **Dashboard**!
-- [x] **3. Student Dashboard & Onboarding**:
-  - Greeting displays: *"Welcome back, [Student Name]!"*.
-  - Step-by-step guide explains the 5-step registration process.
-  - Quick metrics display registered count.
-- [x] **4. Browse & Filter Events**:
-  - Navigate to `/events.html`.
-  - Type *"Hackathon"* in the search bar — cards filter instantly.
-  - Click **"Sports"** or **"Coding"** category pills — grid updates dynamically.
-- [x] **5. 1-Click Seat Reservation**:
-  - Click **"Register Now"** on *"Innovate Hackathon"*.
-  - Backend verifies student status, available capacity, and records registration in SQLite.
-  - Confetti explodes on screen, toast notification confirms registration, and digital ticket modal appears!
-- [x] **6. Duplicate Registration Protection**:
-  - Attempt to register for the same event a second time.
-  - Server immediately rejects with a friendly error: *"You are already registered for this event."*
-- [x] **7. Capacity Limits Enforcement**:
-  - Check the seating progress bar. The remaining seat count decreases automatically.
-  - When capacity reaches 0, server blocks new RSVPs and flags event as *"Full Capacity"*.
-- [x] **8. Downloadable PDF Entry Passes & Certificates**:
-  - Navigate to **"My Registrations"** (`/my-registrations.html`).
-  - View your generated entry pass with student roll number, ticket ID, and barcode.
-  - Click **"Download PDF Pass"** or the **"PDF"** button in your passes table to download an official vector `.pdf` confirmation slip directly to your device.
-  - Click **"Certificate"** to preview and click **"Download PDF Certificate"** to save an official university credential.
-  - Click the **Trash Can icon** to cancel registration and release seat capacity.
-- [x] **9. Dean / Administrator Portal & Live Ticket Scanner**:
-  - Sign in with `admin@campusconnect.edu` / `Admin@12345` (or visit `admin.html` with Demo Auto-Activation).
-  - Metrics cards display: Total Students, Total Events, Total Registrations, Upcoming Events.
-  - Use the **Auditorium Gate Control Scanner** to verify ticket IDs (e.g. `CC-2026-01-0042`) for real-time gate check-ins.
-  - Click **"Create New Event"** with schedules, venue, description, **Eligibility Criteria**, and seat capacity.
-  - Click the **Users icon** on any event to view the live list of registered students and click **"Export Roster CSV"** to download participant records.
-  - Toggle student attendance status (`Confirmed`, `Attended`, `Cancelled`).
-- [x] **10. Safe Logout**:
-  - Click **Logout**.
-  - Server destroys session and clears session cookie. Protected endpoints (`/dashboard.html`, `/admin.html`) can no longer be accessed without logging in again.
-
----
-
-## 🎯 9. Academic Submission Readiness & Viva Checklist
-
-| Module Required | Status | Viva / Evaluator Demonstration Details |
-| :--- | :---: | :--- |
-| **Event Creation & Management** | ✅ Complete | Organizers set titles, categories (Fest, Workshop, Seminar, Competition), venues, dates, **Eligibility Criteria**, and registration seat limits. |
-| **Student Registration** | ✅ Complete | Students browse, filter by category/search query, and register with 1 click. Duplicate registrations are blocked (`409 Conflict`). |
-| **Seat-Limit & Live Availability** | ✅ Complete | Dynamic capacity countdown (`X remaining of Y`), visual progress bar, automatic SOLD OUT / FULL enforcement. |
-| **Downloadable PDF Confirmation Slip** | ✅ Complete | Instant client-side vector PDF generation (`.pdf`) with barcode, roll ID, eligibility, gate instructions, and verification badge. |
-| **Gate Check-In & Ticket Scanner** | ✅ Complete | Live auditorium scanner in the admin dashboard for validating entry codes and marking student attendance. |
-| **Organizer Dashboard & CSV Export** | ✅ Complete | Full analytics metrics, attendee roster inspection, and 1-click **Export Roster CSV**. |
-| **Official University Certificate** | ✅ Complete | Ceremonial Certificate of Participation modal with verification ID and 1-click PDF download. |
-| **Dual-Runtime Execution** | ✅ Complete | Runs seamlessly via direct browser double-click (`file:///`) OR full-stack Node.js server (`http://localhost:3000` / `3001`). |
-
----
-
-## 🛡️ 10. Security & Production Considerations
-
-- **Session Security**: Uses `HttpOnly` and `SameSite: 'lax'` cookies to prevent cross-site scripting (XSS) cookie extraction.
-- **Production Cookies**: In production, `secure: true` transmits session cookies exclusively over encrypted HTTPS connections.
-- **SQL Injection Prevention**: All SQL queries utilize parameterized placeholders (`?`), ensuring user inputs cannot alter query logic.
-- **Rate Limiting**: Authentication endpoints are rate-limited to 50 attempts per 15-minute window to defend against brute-force attacks.
-- **Password Protection**: Passwords are never stored in plain text and are salted using `bcryptjs` with 10 rounds of hashing.
-
----
-
-## 🏆 Project Conclusion
-
-CampusConnect provides an end-to-end, production-ready, university-grade web portal built specifically according to standard engineering guidelines and academic evaluation standards. All prompt specifications and submission criteria are 100% satisfied.
-
+</div>
