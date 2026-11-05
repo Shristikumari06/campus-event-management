@@ -264,7 +264,7 @@ function copyCertVerificationLink() {
   const codeEl = document.getElementById('cert-code');
   const certId = codeEl ? codeEl.textContent : 'CC-CERT-2026-9481';
   const url = `${window.location.origin || 'https://campusconnect.edu'}/verify?cert=${certId}`;
-  
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(() => {
       showToast('Certificate verification link copied to clipboard!', 'success');
@@ -310,11 +310,11 @@ function setupTicketModalListeners() {
     });
   }
 
-  // Print Ticket Action
+  // Print Ticket Action -> Triggers high-resolution vector PDF generation & download
   const printBtn = document.getElementById('btn-print-ticket');
   if (printBtn) {
     printBtn.addEventListener('click', () => {
-      window.print();
+      downloadCurrentPassSlip();
     });
   }
 
