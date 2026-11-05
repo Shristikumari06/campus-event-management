@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Events | CampusConnect</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="events-page-body" style="background: #070a14; color: #f1f5f9; min-height: 100vh; position: relative; overflow-x: hidden;">
+
+  <!-- Ambient Glowing Background Canvas & Orbs -->
+  <div style="position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; min-height: 100%;">
+    <div class="hero-bg-overlay" style="opacity: 0.35;"></div>
+    <div class="hero-ambient-glow glow-1" style="opacity: 0.22; top: 80px; right: -50px;"></div>
+    <div class="hero-ambient-glow glow-2" style="opacity: 0.22; top: 450px; left: -100px;"></div>
+  </div>
+
+  <!-- Confetti Canvas for Ticket Celebrations -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+          <span class="logo-sub">University Event Hub</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="desktop-nav">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link"><i class="fa-solid fa-house nav-icon"></i> Home</a></li>
+          <li><a href="events.html" class="nav-link active"><i class="fa-solid fa-calendar-days nav-icon"></i> Events</a></li>
+          <li><a href="index.html#categories" class="nav-link"><i class="fa-solid fa-layer-group nav-icon"></i> Categories</a></li>
+          <li><a href="index.html#about" class="nav-link"><i class="fa-solid fa-circle-info nav-icon"></i> About Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Injected via main.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Events Section -->
+  <section class="events-section" style="padding-top: 130px; padding-bottom: 90px; position: relative; z-index: 1;">
+    <div class="container">
+
+      <!-- Section Title & Subtitle -->
+      <div style="text-align: center; margin-bottom: 2.75rem; position: relative; z-index: 2;">
+        <span class="section-tag" style="background: rgba(121, 40, 202, 0.2); border-color: rgba(121, 40, 202, 0.35); color: #c084fc;">
+          <i class="fa-solid fa-sparkles text-pink"></i> 2026 UNIVERSITY FIESTA
+        </span>
+        <h1 class="section-title" style="color: #ffffff; font-size: 2.85rem; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 0.75rem;">
+          <span class="gradient-text">Discover Campus Events</span>
+        </h1>
+        <p class="section-subtitle" style="color: #94a3b8; font-size: 1.05rem; max-width: 620px; margin: 0 auto; line-height: 1.6;">
+          Find hackathons, cultural concerts, technical summits, and athletics meets. Instant seat reservations with zero paper tickets.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Sort Bar -->
+      <div class="events-top-bar" style="background: rgba(18, 24, 46, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.25rem 1.75rem; border-radius: 20px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.35); position: relative; z-index: 2;">
+        <div class="events-controls" style="width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: center;">
+          
+          <div class="event-search-wrapper" style="flex: 1; min-width: 280px; max-width: 480px; position: relative; display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(255, 255, 255, 0.14); border-radius: 9999px; padding: 0.55rem 1.25rem; transition: all 0.2s ease;">
+            <i class="fa-solid fa-magnifying-glass" style="color: var(--accent-cyan, #06b6d4); margin-right: 0.75rem; font-size: 0.95rem;"></i>
+            <input type="text" id="event-search-input" placeholder="Search events by title, domain, auditorium..." style="width: 100%; color: #ffffff; font-size: 0.92rem; background: transparent; border: none; outline: none;">
+            <button id="clear-search-btn" class="clear-btn d-none" style="color: #94a3b8; font-size: 0.95rem; cursor: pointer;" title="Clear search">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="sort-wrapper" style="display: flex; align-items: center; gap: 0.65rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 9999px; padding: 0.45rem 1.15rem;">
+            <label for="event-sort-select" style="font-size: 0.88rem; color: #94a3b8; font-weight: 600; display: flex; align-items: center; gap: 0.45rem; white-space: nowrap;">
+              <i class="fa-solid fa-arrow-down-wide-short text-pink"></i> Sort By:
+            </label>
+            <select id="event-sort-select" style="background: transparent; border: none; outline: none; color: #ffffff; font-size: 0.88rem; font-weight: 600; cursor: pointer; padding-right: 0.5rem;">
+              <option value="date-asc" style="background: #0d1224; color: #ffffff;">Date: Soonest First</option>
+              <option value="date-desc" style="background: #0d1224; color: #ffffff;">Date: Latest First</option>
+              <option value="popular" style="background: #0d1224; color: #ffffff;">Most Popular (High Capacity)</option>
+              <option value="name-asc" style="background: #0d1224; color: #ffffff;">Alphabetical (A-Z)</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-filter-pills" id="category-filter-bar" style="margin-bottom: 2.5rem; display: flex; gap: 0.65rem; flex-wrap: wrap; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.25rem; position: relative; z-index: 2;">
+        <button class="cat-pill active" data-filter="all">All Events (<span id="count-all">6</span>)</button>
+        <button class="cat-pill" data-filter="College Fest">College Fests</button>
+        <button class="cat-pill" data-filter="Workshop">Workshops</button>
+        <button class="cat-pill" data-filter="Seminar">Seminars</button>
+        <button class="cat-pill" data-filter="Competition">Competitions</button>
+        <button class="cat-pill" data-filter="Technology">Technology</button>
+        <button class="cat-pill" data-filter="Cultural">Cultural</button>
+        <button class="cat-pill" data-filter="Coding">Coding</button>
+        <button class="cat-pill" data-filter="Sports">Sports</button>
+        <button class="cat-pill" data-filter="Business">Entrepreneurship</button>
+        <button class="cat-pill btn-clear-all-filters" id="btn-reset-filters">
+          <i class="fa-solid fa-rotate-left"></i> Reset
+        </button>
+      </div>
+
+      <!-- Events Grid Container -->
+      <div class="dash-events-grid" id="events-grid">
+        <!-- Rendered via events.js -->
+      </div>
+
+      <!-- Empty State Container -->
+      <div class="empty-state d-none" id="empty-state" style="text-align: center; padding: 5rem 1rem; background: rgba(18, 24, 46, 0.4); border-radius: 20px; border: 1px dashed rgba(255,255,255,0.1); margin-top: 2rem;">
+        <div style="font-size: 3.5rem; color: #475569; margin-bottom: 1.25rem;">
+          <i class="fa-solid fa-calendar-xmark"></i>
+        </div>
+        <h3 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem;">No Campus Events Found</h3>
+        <p style="color: #94a3b8; max-width: 480px; margin: 0 auto 1.5rem;">
+          We couldn't find any events matching your selected search query or category filters.
+        </p>
+        <button class="btn btn-primary btn-glow" id="btn-empty-reset">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Show All Events
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal 1: Event Details Modal -->
+  <div class="modal-backdrop" id="event-details-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-large" style="background: #11172f; border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 2.25rem; max-width: 720px; width: 100%;">
+      <button class="modal-close-btn" id="close-details-modal" style="color: #94a3b8; font-size: 1.8rem; cursor: pointer; float: right; background: none; border: none;">&times;</button>
+      <div class="modal-body" id="details-modal-body">
+        <!-- Injected via events.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Digital Entry Pass Ticket Modal -->
+  <div class="modal-backdrop" id="ticket-pass-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content modal-ticket" style="background: #10162f; border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; max-width: 580px; width: 100%; padding: 2rem;">
+      <button class="modal-close-btn" id="close-ticket-modal" style="color: #94a3b8; font-size: 1.8rem; cursor: pointer; float: right; background: none; border: none;">&times;</button>
+      
+      <div class="ticket-wrapper" id="printable-ticket" style="margin-top: 1rem;">
+        <div style="background: linear-gradient(135deg, #ff0080, #7928ca); padding: 1.25rem; border-radius: 14px 14px 0 0; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 0.6rem; color: #fff; font-weight: 800; font-size: 1.15rem;">
+            <i class="fa-solid fa-graduation-cap"></i> CampusConnect Pass
+          </div>
+          <span style="background: rgba(0,0,0,0.3); color: #6ee7b7; font-size: 0.72rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 9999px;">
+            <i class="fa-solid fa-circle-check"></i> VERIFIED ENTRY
+          </span>
+        </div>
+
+        <div style="background: #18203f; padding: 1.75rem; border: 1px solid rgba(255,255,255,0.08); border-top: none; border-radius: 0 0 14px 14px;">
+          <span id="ticket-category-badge" class="event-category-chip" style="position: static; font-size: 0.75rem; margin-bottom: 0.75rem;">Technology Event</span>
+          <h2 id="ticket-event-name" style="font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 1.25rem;">TechFest 2026: Quantum Leap</h2>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+            <div>
+              <small style="color: #94a3b8; font-size: 0.75rem; font-weight: 700;">STUDENT NAME</small>
+              <div id="ticket-student-name" style="color: #fff; font-weight: 700;">Alex Morgan</div>
+            </div>
+            <div>
+              <small style="color: #94a3b8; font-size: 0.75rem; font-weight: 700;">STUDENT ROLL ID</small>
+              <div id="ticket-student-id" style="color: #c084fc; font-weight: 700;">CS2026101</div>
+            </div>
+            <div>
+              <small style="color: #94a3b8; font-size: 0.75rem; font-weight: 700;">VENUE</small>
+              <div id="ticket-venue" style="color: #fff; font-weight: 600;">Main Auditorium</div>
+            </div>
+            <div>
+              <small style="color: #94a3b8; font-size: 0.75rem; font-weight: 700;">DATE & TIME</small>
+              <div id="ticket-date" style="color: #fff; font-weight: 600;">Nov 12, 2026</div>
+            </div>
+          </div>
+
+          <!-- Digital Barcode / Ticket Code Strip -->
+          <div style="background: #090d1c; padding: 1rem; border-radius: 10px; text-align: center; border: 1px dashed rgba(255,255,255,0.15);">
+            <div style="font-family: monospace; font-size: 1.5rem; letter-spacing: 4px; color: #fff; margin-bottom: 0.35rem;">
+              ||| | |||| | ||| |||| | ||
+            </div>
+            <div id="ticket-barcode-text" style="font-family: monospace; font-size: 0.88rem; color: #06b6d4; font-weight: 700;">
+              CC-2026-01-0042
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="addCurrentPassToGoogleCalendar()">
+              <i class="fa-brands fa-google text-cyan"></i> Add to Calendar
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+              <i class="fa-solid fa-print"></i> Print Ticket
+            </button>
+            <button class="btn btn-primary btn-glow" id="btn-download-ticket-pass" onclick="downloadCurrentPassSlip()">
+              <i class="fa-solid fa-file-pdf"></i> Download PDF Pass
+            </button>
+            <button class="btn btn-subtle" onclick="closeModal('ticket-pass-modal')">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared & Events JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/pdf-generator.js"></script>
+  <script src="js/events.js"></script>
+</body>
+</html>
+
