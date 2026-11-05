@@ -1,0 +1,30 @@
+{
+  "name": "campusconnect",
+  "version": "2.0.0",
+  "description": "Campus Event Management & Registration Portal — Full Stack Node.js, Express & SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node database/seed.js"
+  },
+  "keywords": [
+    "campus",
+    "event-management",
+    "registration",
+    "express",
+    "sqlite3",
+    "vanilla-js"
+  ],
+  "author": "CampusConnect Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1"
+  }
+}
+
