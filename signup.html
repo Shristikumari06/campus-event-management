@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | CampusConnect — University Event Hub</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Core & Auth Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+
+  <!-- Ambient Glow Effects -->
+  <div class="auth-bg-ambient auth-ambient-1"></div>
+  <div class="auth-bg-ambient auth-ambient-2"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <div class="auth-split-wrapper">
+
+    <!-- Left Brand Banner (Desktop) -->
+    <div class="auth-side-banner">
+      <div class="auth-banner-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon-wrapper">
+            <i class="fa-solid fa-graduation-cap logo-icon"></i>
+            <span class="logo-pulse"></span>
+          </div>
+          <div class="logo-text">
+            <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+            <span class="logo-sub">University Event Hub</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="auth-banner-content">
+        <div class="auth-pill-tag">
+          <i class="fa-solid fa-id-badge"></i> Student Registration
+        </div>
+        <h1 class="auth-banner-title">
+          Join Campus Life at <span class="gradient-text">CampusConnect</span>
+        </h1>
+        <p class="auth-banner-desc">
+          One university account unlocks access to technical symposiums, coding hackathons, cultural concerts, and campus sports tournaments with verified attendance credits.
+        </p>
+
+        <div class="auth-highlights">
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-shield-check"></i></div>
+            <span>Verified university student roll number authentication</span>
+          </div>
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-qrcode"></i></div>
+            <span>Generate scannable digital passes instantly</span>
+          </div>
+          <div class="auth-highlight-item">
+            <div class="auth-highlight-icon"><i class="fa-solid fa-bell"></i></div>
+            <span>Get automatic schedule & venue change notifications</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-banner-footer">
+        <i class="fa-solid fa-lock text-cyan"></i>
+        <span>Encrypted with bcrypt &bull; Session Secured</span>
+      </div>
+    </div>
+
+    <!-- Right Signup Form Card -->
+    <div class="auth-form-side">
+      <div class="auth-card" style="max-width: 540px;">
+        
+        <div class="auth-header">
+          <h2>Create Account</h2>
+          <p>Register with your university student details to get started</p>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="signup-alert" class="auth-alert" role="alert">
+          <i class="fa-solid fa-circle-exclamation auth-alert-icon"></i>
+          <span id="signup-alert-text"></span>
+        </div>
+
+        <!-- Signup Form -->
+        <form id="signup-form" class="auth-form" novalidate>
+          
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="signup-name" class="form-label">
+              <i class="fa-solid fa-user"></i> Full Name <span class="req-star">*</span>
+            </label>
+            <div class="input-box">
+              <i class="fa-regular fa-id-card input-lead-icon"></i>
+              <input type="text" id="signup-name" placeholder="e.g. Alex Morgan" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Email & Student ID -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-email" class="form-label">
+                <i class="fa-solid fa-envelope"></i> Student Email <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-at input-lead-icon"></i>
+                <input type="email" id="signup-email" placeholder="alex@campus.edu" required autocomplete="email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-id" class="form-label">
+                <i class="fa-solid fa-hashtag"></i> Student / Roll ID <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-barcode input-lead-icon"></i>
+                <input type="text" id="signup-id" placeholder="e.g. CS2026101" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Department & Year of Study -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-dept" class="form-label">
+                <i class="fa-solid fa-building-columns"></i> Department <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-graduation-cap input-lead-icon"></i>
+                <select id="signup-dept" required>
+                  <option value="">Select Department...</option>
+                  <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Electronics & Communication">Electronics & Communication</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Business Administration">Business Administration (MBA/BBA)</option>
+                  <option value="Arts, Media & Design">Arts, Media & Design</option>
+                  <option value="Applied Sciences">Applied Sciences</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-year" class="form-label">
+                <i class="fa-solid fa-calendar-check"></i> Study Year <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-layer-group input-lead-icon"></i>
+                <select id="signup-year" required>
+                  <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+                  <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+                  <option value="3rd Year (Junior)" selected>3rd Year (Junior)</option>
+                  <option value="4th Year (Senior)">4th Year (Senior)</option>
+                  <option value="Postgraduate / Research">Postgraduate / Research</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password & Confirm Password -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-password" class="form-label">
+                <i class="fa-solid fa-lock"></i> Password <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-key input-lead-icon"></i>
+                <input type="password" id="signup-password" placeholder="Min. 6 characters" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-password" data-target="signup-password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-confirm-password" class="form-label">
+                <i class="fa-solid fa-shield-check"></i> Confirm Password <span class="req-star">*</span>
+              </label>
+              <div class="input-box">
+                <i class="fa-solid fa-check-double input-lead-icon"></i>
+                <input type="password" id="signup-confirm-password" placeholder="Repeat password" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-password" data-target="signup-confirm-password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Match Feedback -->
+          <div id="pw-match-indicator" class="pw-match-indicator"></div>
+
+          <!-- Terms & Conditions Checkbox -->
+          <div class="form-group" style="margin-top: 0.35rem;">
+            <label class="remember-label" style="align-items: flex-start; gap: 0.75rem;">
+              <input type="checkbox" id="signup-terms" required checked style="margin-top: 3px;">
+              <span style="font-size: 0.84rem; line-height: 1.4; color: #cbd5e1;">
+                I agree to the university event code of conduct and certify that my roll number and student details are accurate.
+              </span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-auth-submit" id="btn-signup-submit">
+            <span class="auth-spinner"></span>
+            <span class="auth-btn-text">Create Student Account</span>
+            <i class="fa-solid fa-user-plus"></i>
+          </button>
+
+        </form>
+
+        <!-- Presentation Auto-Fill Quick Button -->
+        <div class="demo-credentials-box">
+          <div style="font-weight: 700; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; color: #fff;">
+            <i class="fa-solid fa-wand-magic-sparkles text-pink"></i> Presentation Demo Helper:
+          </div>
+          <button type="button" class="demo-fill-btn" id="btn-fill-signup-demo">
+            <i class="fa-solid fa-bolt"></i> Auto-Fill Sample Student Details
+          </button>
+        </div>
+
+        <div class="auth-footer">
+          Already have an account?
+          <a href="login.html">Sign In Here</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Shared & Auth JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
+
