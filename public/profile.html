@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile | CampusConnect</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dash-layout">
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="dash-nav">
+    <div class="dash-nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">Campus<span class="logo-accent">Connect</span></span>
+          <span class="logo-sub">Student Portal</span>
+        </div>
+      </a>
+
+      <nav class="dash-nav-links">
+        <a href="dashboard.html" class="dash-nav-link">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </a>
+        <a href="events.html" class="dash-nav-link">
+          <i class="fa-solid fa-calendar-days"></i> Explore Events
+        </a>
+        <a href="my-registrations.html" class="dash-nav-link">
+          <i class="fa-solid fa-ticket"></i> My Registrations
+        </a>
+        <a href="profile.html" class="dash-nav-link active">
+          <i class="fa-solid fa-user-gear"></i> Profile
+        </a>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button onclick="handleLogout()" class="btn btn-subtle" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main" style="max-width: 900px;">
+    
+    <div class="dash-section-header" style="margin-bottom: 2rem;">
+      <div>
+        <h1 class="welcome-title" style="font-size: 2rem;">Account & Profile Settings</h1>
+        <p class="welcome-subtitle">Manage your academic credentials and portal security.</p>
+      </div>
+    </div>
+
+    <!-- Profile Details Card -->
+    <div class="registrations-table-card" style="padding: 2.25rem; margin-bottom: 2.5rem;">
+      <h3 style="font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.65rem;">
+        <i class="fa-solid fa-user-graduate text-pink"></i> Academic Information
+      </h3>
+
+      <form id="profile-info-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+          
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              Full Student Name
+            </label>
+            <input type="text" id="prof-name" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; color: #fff;" required>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              University Email (Verified)
+            </label>
+            <input type="email" id="prof-email" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #94a3b8; cursor: not-allowed;" readonly>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              Student ID / Roll Number (Verified)
+            </label>
+            <input type="text" id="prof-roll" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #94a3b8; cursor: not-allowed;" readonly>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              Academic Department
+            </label>
+            <input type="text" id="prof-dept" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; color: #fff;" required>
+          </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="submit" class="btn btn-primary btn-glow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Profile Changes
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Password Update Card -->
+    <div class="registrations-table-card" style="padding: 2.25rem;">
+      <h3 style="font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.65rem;">
+        <i class="fa-solid fa-lock text-purple"></i> Security & Password
+      </h3>
+
+      <form id="profile-password-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+          
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              Current Password
+            </label>
+            <input type="password" id="prof-curr-pass" placeholder="••••••••" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; color: #fff;" required>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.45rem;">
+              New Password (Min. 6 chars)
+            </label>
+            <input type="password" id="prof-new-pass" placeholder="••••••••" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; color: #fff;" required>
+          </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="submit" class="btn btn-secondary">
+            <i class="fa-solid fa-key"></i> Update Password
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Shared JS -->
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = await checkAuthSession();
+      if (!user) {
+        showToast('Please sign in to view your profile.', 'warning');
+        setTimeout(() => window.location.href = 'login.html', 1000);
+        return;
+      }
+
+      document.getElementById('prof-name').value = user.full_name || '';
+      document.getElementById('prof-email').value = user.email || '';
+      document.getElementById('prof-roll').value = user.student_id || '';
+      document.getElementById('prof-dept').value = user.department || '';
+
+      // Handle Profile Info Submit
+      document.getElementById('profile-info-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const res = await fetch('/api/auth/profile', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              full_name: document.getElementById('prof-name').value.trim(),
+              department: document.getElementById('prof-dept').value.trim()
+            })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast(data.message, 'success');
+          } else {
+            showToast(data.message || 'Update failed.', 'error');
+          }
+        } catch (err) {
+          const activeUser = window.CampusConnect.currentUser || {};
+          activeUser.full_name = document.getElementById('prof-name').value.trim();
+          activeUser.department = document.getElementById('prof-dept').value.trim();
+          localStorage.setItem('campusconnect_active_user', JSON.stringify(activeUser));
+          showToast('Profile updated successfully!', 'success');
+        }
+      });
+
+      // Handle Password Change Submit
+      document.getElementById('profile-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const currentPassword = document.getElementById('prof-curr-pass').value;
+        const newPassword = document.getElementById('prof-new-pass').value;
+
+        if (newPassword.length < 6) {
+          showToast('New password must be at least 6 characters long.', 'warning');
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/auth/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ currentPassword, newPassword })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast(data.message, 'success');
+            document.getElementById('profile-password-form').reset();
+          } else {
+            showToast(data.message || 'Password change failed.', 'error');
+          }
+        } catch (err) {
+          const activeUser = window.CampusConnect.currentUser;
+          if (activeUser) {
+            activeUser.password = newPassword;
+            localStorage.setItem('campusconnect_active_user', JSON.stringify(activeUser));
+          }
+          showToast('Password updated successfully!', 'success');
+          document.getElementById('profile-password-form').reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
